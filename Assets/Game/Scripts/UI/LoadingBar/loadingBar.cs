@@ -38,7 +38,7 @@ public class LoadingBar : MonoBehaviour
         {
             scaleX = 0;
             check = false;
-            //SceneManager.LoadScene("");
+            SceneManager.LoadScene(1);
         }
     }
 }
