@@ -21,12 +21,13 @@ public class PlayerController : MonoBehaviour
         manager = ManagerScript.Ins;
         manaCurrent = data.manaMax;
         healCurrent = data.healMax;
-        Calculate();
+        dame = data.dameMax;
     }
 
     private void Start()
     {
         rigid = gameObject.GetComponent<Rigidbody>();
+        Calculate();
     }
 
     private void LateUpdate()
@@ -34,6 +35,9 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
     }
 
+    /**
+     * Hàm di chuyển Player * Time.deltaTime
+     */
     private void MovePlayer()
     {
         float hori = Input.GetAxis("Horizontal");
@@ -46,28 +50,43 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
+            // Kiểm tra xem còn Mana để xử dụng chiêu không
             if(manager.manaPlayer.UseMana(manaCurrent, 1, data.level))
             {
                 manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
             }
         }
+
         CheckDistanEnemy();
     }
 
+    /**
+     * Check xem Player đang dùng vũ khí tương sinh với mình không
+     * Nếu tương sinh -> dame tăng 10% (vũ khí tương sinh)
+     *     tương khắc -> dame giảm 10% (vũ khí tương khắc)
+     *     không tương sinh không tương khắc giữ nguyên
+     */
     private void Calculate()
     {
-        if(manager.nourishmentRestraintFuction.checkMutualNourishment(data.phases, manager.bullet.data.phases)){
-            dame = data.dameMax + manager.bullet.data.baseDame;
-        }else if(manager.nourishmentRestraintFuction.checkMutualRestraint(manager.bullet.data.phases, data.phases))
-        {
-            dame = data.dameMax - manager.bullet.data.baseDame;
+        // Trường hợp 1: Vũ khí tương sinh
+        if(manager.nourishmentRestraintFuction.checkMutualNourishment(manager.bullet.data.phases, data.phases)){
+            dame = data.dameMax + (manager.bullet.data.baseDame * 1.1f);
         }
+        // Trường hợp 2: Vũ khí tương khắc
+        else if(manager.nourishmentRestraintFuction.checkMutualRestraint(manager.bullet.data.phases, data.phases))
+        {
+            dame = data.dameMax + (manager.bullet.data.baseDame * 0.9f);
+        }
+        // Trường hợp 3: Vũ khí không tương sinh cũng không tương khắc
         else
         {
-            dame = data.dameMax;
+            dame = data.dameMax + manager.bullet.data.baseDame;
         }
     }
 
+    /**
+     * Hàm Check xem 10f xung quanh có Enemy không (dựa vào Tag và so sánh position)
+     */
     private void CheckDistanEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
@@ -79,7 +98,7 @@ public class PlayerController : MonoBehaviour
 
             if (distance <= 10f)
             {
-                Debug.Log("Enemy " + distance);
+                // check va cham Enemy
             }
         }
     }
