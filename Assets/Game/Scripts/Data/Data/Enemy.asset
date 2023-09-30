@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6574268bd93d4be5afc4c04e5e75478, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 9ed11a580d043455ca92841568fc2bdb, type: 3}
+  m_Name: Enemy
   m_EditorClassIdentifier: 
-  speed: 2000
-  dameMax: 100
+  dameMax: 200
   healMax: 2000
-  manaMax: 200
-  level: 1
-  phases: 0
+  phases: 3
