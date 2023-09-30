@@ -2,16 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data", menuName = "Data/Player")]
-public class ScripTablePlayer : ScriptableObject
+[CreateAssetMenu(fileName = "Data", menuName = "Data/Enemy")]
+public class ScripTableEnemy : ScriptableObject
 {
     [Header("Poperties")]
-    public float speed;
     public float dameMax;
     public float healMax;
-    public float manaMax;
 
-    public int level;
     [Header("Elemental")]
     public Phases phases;
 }

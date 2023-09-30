@@ -7,16 +7,20 @@ public class PlayerController : MonoBehaviour
     // get data poperties
     public ScripTablePlayer data;
     // get PreFab bullet
-    [SerializeField]
-    private GameObject bulletPreFab;
+    public GameObject bulletPreFab;
 
     private ManagerScript manager;
     private Rigidbody rigid;
+
+    public float manaCurrent;
+    public float healCurrent;
     public float dame;
 
     private void Awake()
     {
         manager = ManagerScript.Ins;
+        manaCurrent = data.manaMax;
+        healCurrent = data.healMax;
         Calculate();
     }
 
@@ -32,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer()
     {
-        //Debug.Log("move Player");
         float hori = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(hori, 0.0f, ver);
@@ -43,22 +46,41 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
-            manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
-            Debug.Log(dame);
+            if(manager.manaPlayer.UseMana(manaCurrent, 1, data.level))
+            {
+                manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
+            }
         }
+        CheckDistanEnemy();
     }
 
     private void Calculate()
     {
         if(manager.nourishmentRestraintFuction.checkMutualNourishment(data.phases, manager.bullet.data.phases)){
-            dame = data.baseDame + manager.bullet.data.baseDame;
+            dame = data.dameMax + manager.bullet.data.baseDame;
         }else if(manager.nourishmentRestraintFuction.checkMutualRestraint(manager.bullet.data.phases, data.phases))
         {
-            dame = data.baseDame - manager.bullet.data.baseDame;
+            dame = data.dameMax - manager.bullet.data.baseDame;
         }
         else
         {
-            dame = data.baseDame;
+            dame = data.dameMax;
+        }
+    }
+
+    private void CheckDistanEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
+        Transform playerTransform = transform;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(playerTransform.position, enemy.transform.position);
+
+            if (distance <= 10f)
+            {
+                Debug.Log("Enemy " + distance);
+            }
         }
     }
 }
