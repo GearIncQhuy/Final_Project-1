@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dameMax: 200
   healMax: 2000
-  phases: 3
+  phases: 1

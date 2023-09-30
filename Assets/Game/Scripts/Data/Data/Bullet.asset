@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   baseDame: 100
-  phases: 1
+  phases: 2
