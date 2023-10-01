@@ -7,18 +7,21 @@ public class PlayerController : MonoBehaviour
     // get data poperties
     public ScripTablePlayer data;
     // get PreFab bullet
-    public GameObject bulletPreFab;
+    //public GameObject bulletPreFab;
 
-    private ManagerScript manager;
-    private Rigidbody rigid;
+    public ManagerScript manager;
+    public Rigidbody rigid;
 
     public float manaCurrent;
     public float healCurrent;
     public float dame;
 
+    public bool checkMove;
+
     private void Awake()
     {
         manager = ManagerScript.Ins;
+
         manaCurrent = data.manaMax;
         healCurrent = data.healMax;
         dame = data.dameMax;
@@ -32,18 +35,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        MovePlayer();
-    }
-
-    /**
-     * Hàm di chuyển Player * Time.deltaTime
-     */
-    private void MovePlayer()
-    {
-        float hori = Input.GetAxis("Horizontal");
-        float ver = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(hori, 0.0f, ver);
-        rigid.velocity = movement * data.speed * Time.deltaTime;
+        
     }
 
     private void Update()
@@ -53,11 +45,9 @@ public class PlayerController : MonoBehaviour
             // Kiểm tra xem còn Mana để xử dụng chiêu không
             if(manager.manaPlayer.UseMana(manaCurrent, 1, data.level))
             {
-                manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
+                //manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
             }
         }
-
-        CheckDistanEnemy();
     }
 
     /**
@@ -84,22 +74,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /**
-     * Hàm Check xem 10f xung quanh có Enemy không (dựa vào Tag và so sánh position)
-     */
-    private void CheckDistanEnemy()
+    private void OnDrawGizmos()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        Transform playerTransform = transform;
-
-        foreach (GameObject enemy in enemies)
-        {
-            float distance = Vector3.Distance(playerTransform.position, enemy.transform.position);
-
-            if (distance <= 10f)
-            {
-                // check va cham Enemy
-            }
-        }
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, 10f);
+        Gizmos.DrawRay(transform.position, transform.forward * 10f); 
     }
+
 }
