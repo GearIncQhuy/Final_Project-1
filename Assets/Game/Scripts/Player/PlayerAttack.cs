@@ -16,7 +16,7 @@ public class PlayerAttack : MonoBehaviour
         player = gameObject.GetComponent<PlayerController>();
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         CheckDistanEnemy();
     }
