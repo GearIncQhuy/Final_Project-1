@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6574268bd93d4be5afc4c04e5e75478, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  speed: 2000
-  baseDame: 200
-  phases: 0
+  speed: 5
+  jumpForce: 0
+  dameMax: 100
+  healMax: 2000
+  manaMax: 200
+  level: 1
+  phases: 3

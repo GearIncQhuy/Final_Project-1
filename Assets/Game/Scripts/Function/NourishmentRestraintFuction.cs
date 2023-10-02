@@ -72,7 +72,6 @@ public class NourishmentRestraintFuction : MonoBehaviour
         {
             indexObj1 = 0;
         }
-
         if (arrPhases[indexObj1] == arrPhases[indexObj2])
         {
             return true;
@@ -93,7 +92,6 @@ public class NourishmentRestraintFuction : MonoBehaviour
     {
         indexObj1 = getIndexElemental(obj1);
         indexObj2 = getIndexElemental(obj2);
-
         // check index null
         if (indexObj1 == -1 || indexObj2 == -1)
         {
@@ -112,7 +110,6 @@ public class NourishmentRestraintFuction : MonoBehaviour
         {
             indexObj1 = 1;
         }
-
         if (arrPhases[indexObj1] == arrPhases[indexObj2])
         {
             return true;

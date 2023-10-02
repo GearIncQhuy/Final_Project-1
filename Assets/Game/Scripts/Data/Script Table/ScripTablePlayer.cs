@@ -7,7 +7,13 @@ public class ScripTablePlayer : ScriptableObject
 {
     [Header("Poperties")]
     public float speed;
-    public float baseDame;
+    public float jumpForce;
+
+    public float dameMax;
+    public float healMax;
+    public float manaMax;
+
+    public int level;
     [Header("Elemental")]
     public Phases phases;
 }

@@ -9,7 +9,6 @@ public class ShootFunction : MonoBehaviour
      */
     public void Shoot(GameObject bulletPreFab, float speed, GameObject obj)
     {
-        Debug.Log("shoot");
         GameObject bullet = Instantiate(bulletPreFab, obj.transform.position, Quaternion.identity);
         Rigidbody bulletRigid = bullet.GetComponent<Rigidbody>();
         if (bulletRigid != null)
