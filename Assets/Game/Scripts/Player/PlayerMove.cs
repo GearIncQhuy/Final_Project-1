@@ -38,18 +38,21 @@ public class PlayerMove : MonoBehaviour
             // Sử dụng Quaternion.Slerp để xoay từ góc hiện tại đến góc mục tiêu
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-        // Check move cho attack
-        if(hori != 0 || ver != 0)
+        if (!player.DontMove)
         {
-            player.checkMove = true;
-        }
-        else if(hori == 0 && ver == 0)
-        {
-            player.checkMove = false;
-        }
+            // Check move cho attack
+            if (hori != 0 || ver != 0)
+            {
+                player.checkMove = true;
+            }
+            else if (hori == 0 && ver == 0)
+            {
+                player.checkMove = false;
+            }
 
-        // Di chuyển đối tượng
-        transform.Translate(movement * player.data.speed * Time.deltaTime, Space.World);
+            // Di chuyển đối tượng
+            transform.Translate(movement * player.data.speed * Time.deltaTime, Space.World);
+        }
     }
 
     /**

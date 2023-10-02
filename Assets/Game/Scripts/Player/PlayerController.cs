@@ -7,20 +7,21 @@ public class PlayerController : MonoBehaviour
 {
     // get data poperties
     public ScripTablePlayer data;
-    // get PreFab bullet
-    //public GameObject bulletPreFab;
-
     public ManagerScript manager;
     public Rigidbody rigid;
-
-    public Slider manaSlider;
-
+    // Get Slider Canvas
+    [SerializeField] private Slider manaSlider;
+    [SerializeField] private Slider healSlider;
+    // Poperties current
     public float manaCurrent;
     public float healCurrent;
     public float dame;
-
+    // check move
     public bool checkMove;
-
+    // check heal
+    public bool checkHeal;
+    // check don't move
+    public bool DontMove;
     private void Awake()
     {
         manager = ManagerScript.Ins;
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
         manaCurrent = data.manaMax;
         healCurrent = data.healMax;
         dame = data.dameMax;
+
+        DontMove = false;
     }
 
     private void Start()
@@ -40,14 +43,27 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-    private float timeRetore = 0f;
+
+    private float timeRetoreMana = 0f;
+    private float timeRetoreHeal = 0f;
     private void Update()
     {
-        timeRetore += Time.deltaTime;
-        if(timeRetore >= 1f)
+        timeRetoreMana += Time.deltaTime;
+        timeRetoreHeal += Time.deltaTime;
+        // Hồi mana theo giây
+        if (timeRetoreMana >= 1f)
         {
             RestoreMana();
-            timeRetore = 0f;
+            timeRetoreMana = 0f;
+        }
+        // Hồi heal theo giây
+        if (checkHeal)
+        {
+            if(timeRetoreHeal >= 1f)
+            {
+                RestoreHeal();
+                timeRetoreHeal = 0f;
+            }
         }
     }
 
@@ -89,13 +105,20 @@ public class PlayerController : MonoBehaviour
      */
     public float GetDamePlayer(int skill, int level, bool check)
     {
-        float damePlayer = dame + (dame * 0.4f);
-        if(check)
+        if(skill == 1)
         {
-            return damePlayer;
+            float damePlayer = dame + (dame * 0.4f);
+            if (check)
+            {
+                return damePlayer;
+            }
+            // dame lan toả (= 50% dame max)
+            return damePlayer / 2;
+        }else if(skill == 2)
+        {
+            return dame / 2;
         }
-        // dame lan toả (= 50% dame max)
-        return damePlayer / 2;
+        return 0;
     }
 
     /**
@@ -109,5 +132,18 @@ public class PlayerController : MonoBehaviour
             manaCurrent = data.manaMax;
         }
         manaSlider.value = manaCurrent / data.manaMax;
+    }
+
+    /**
+     * 
+     */
+    private void RestoreHeal()
+    {
+        healCurrent += (data.healMax * 0.05f);
+        if(healCurrent > data.healMax)
+        {
+            healCurrent = data.healMax;
+        }
+        healSlider.value = healCurrent / data.healMax;
     }
 }
