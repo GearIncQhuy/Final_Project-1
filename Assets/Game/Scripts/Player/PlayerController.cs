@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     public ManagerScript manager;
     public Rigidbody rigid;
+
+    public Slider manaSlider;
 
     public float manaCurrent;
     public float healCurrent;
@@ -37,16 +40,14 @@ public class PlayerController : MonoBehaviour
     {
         
     }
-
+    private float timeRetore = 0f;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        timeRetore += Time.deltaTime;
+        if(timeRetore >= 1f)
         {
-            // Kiểm tra xem còn Mana để xử dụng chiêu không
-            if(manager.manaPlayer.UseMana(manaCurrent, 1, data.level))
-            {
-                //manager.shootFunction.Shoot(bulletPreFab, 20f, this.gameObject);
-            }
+            RestoreMana();
+            timeRetore = 0f;
         }
     }
 
@@ -74,6 +75,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    /**
+     */
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -81,4 +84,30 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawRay(transform.position, transform.forward * 10f); 
     }
 
+    /**
+     * Hàm tính dame cho Player sử dụng
+     */
+    public float GetDamePlayer(int skill, int level, bool check)
+    {
+        float damePlayer = dame + (dame * 0.4f);
+        if(check)
+        {
+            return damePlayer;
+        }
+        // dame lan toả (= 50% dame max)
+        return damePlayer / 2;
+    }
+
+    /**
+     * Hàm hồi lại mana mỗi giây
+     */
+    private void RestoreMana()
+    {
+        manaCurrent += (data.manaMax * 0.01f);
+        if (manaCurrent > data.manaMax)
+        {
+            manaCurrent = data.manaMax;
+        }
+        manaSlider.value = manaCurrent / data.manaMax;
+    }
 }

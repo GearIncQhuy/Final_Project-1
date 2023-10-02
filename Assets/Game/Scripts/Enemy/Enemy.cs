@@ -1,37 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Enemy : MonoBehaviour
 {
-    private ManagerScript manager;
-
-    [SerializeField]
-    public GameObject sliderObj;
-
-    public Slider slider;
+    public ManagerScript manager;
     public ScripTableEnemy data;
-
+    public GameObject sliderObj;
     // Thông số ban đầu
-    private float heal;
-    private float dame;
+    public float heal;
+    public float dame;
 
     // Quản lý cho thanh máu bật tắt
-    private bool checkActive;
+    public bool checkActive;
     private float timeActive;
 
     private void Awake()
     {
         // Thông số ban đầu
         heal = data.healMax;
-        manager = ManagerScript.Ins;
         checkActive = false;
         timeActive = 0f;
     }
 
     private void Start()
     {
+        manager = ManagerScript.Ins;
         Calculate();
     }
 
@@ -45,20 +40,13 @@ public class Enemy : MonoBehaviour
             {
                 checkActive = false;
                 timeActive = 0f;
+                sliderObj.SetActive(false);
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Kiểm tra va chạm viên đạn -> hiển thị thanh máu và cập nhật máu
-        if (other.gameObject.CompareTag(Constants.Tag_Bullet))
-        {
-            UpdateHealEnemy(heal, manager.player.dame);
-            checkActive = true;
-            sliderObj.SetActive(true);
-        }
-
         // Kiểm tra va chạm Player -> chuyển đánh Player gây dame vào máu Player
         if (other.gameObject.CompareTag(Constants.Tag_Player))
         {
@@ -96,20 +84,5 @@ public class Enemy : MonoBehaviour
         {
             dame = data.dameMax;
         }
-    }
-
-    /**
-     * Hàm update lại thanh máu cho Enemy
-     * @param: healCurrentEnemy : máu hiện tại của Enemy
-     * @param: dame : dame nhận vào từ Player hoặc tác nhân bên ngoài
-     * note: heal slider = (healCurrentEnemy - dame) / data.healMax
-     */
-    private void UpdateHealEnemy(float healCurrentEnemy, float dame)
-    {
-        float healCurrent = (healCurrentEnemy - dame) / data.healMax;
-        // update thanh máu
-        slider.value = healCurrent;
-        // update máu hiện tại của Enemy
-        heal = healCurrentEnemy - dame;
     }
 }

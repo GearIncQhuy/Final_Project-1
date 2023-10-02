@@ -16,4 +16,12 @@ public class BulletTest : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag(Constants.Tag_Enemy))
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }
