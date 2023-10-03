@@ -30,7 +30,6 @@ public class PlayerAttack : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
         foreach (GameObject enemy in enemies)
         {
-            // tính khoảng cách từ player đến enemy
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
             if (distance <= 10f)

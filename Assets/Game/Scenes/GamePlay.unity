@@ -1558,7 +1558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &856131666
 Transform:
   m_ObjectHideFlags: 0
@@ -2116,7 +2116,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235798516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.25, y: 3.39, z: -11.25}
+  m_LocalPosition: {x: 14.25, y: 4.39, z: -15.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2131,7 +2131,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235798516}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2b98e7785b1fd41d088ebcb6d0c240c5, type: 3}
   m_Name: 
@@ -2143,7 +2143,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235798516}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -2575,6 +2575,7 @@ GameObject:
   - component: {fileID: 1757594749}
   - component: {fileID: 1757594748}
   - component: {fileID: 1757594750}
+  - component: {fileID: 1757594751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2734,7 +2735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   joystick: {fileID: 1368714064}
-  rotationSpeed: 50
+  rotationSpeed: 25
 --- !u!114 &1757594747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2790,6 +2791,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circle: {fileID: 6997040630950221337, guid: 1aa88b869598e47d7a458d5ee6442c2c, type: 3}
+--- !u!114 &1757594751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757594738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6848ead11a56f49bcafba447d2aeed7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetCircle: {fileID: 311529523105688517, guid: aefe18f95f697495894e4ad86ae5ac37, type: 3}
 --- !u!1 &1769779127
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,8 +3428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6043bde05a7fc4cba197d06915c1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damping: {x: 0.1, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0.5, y: 2, z: -4}
+  Damping: {x: 0, y: 0, z: 0}
+  ShoulderOffset: {x: 0.5, y: 3, z: -8}
   VerticalArmLength: 0.4
   CameraSide: 0.46
   CameraDistance: 2
