@@ -50,8 +50,8 @@ public class Skill_3 : MonoBehaviour
     {
         transCircle = transform.position;
         transCircle.y -= transform.position.y;
-        GameObject circle = Instantiate(targetCircle, transCircle, Quaternion.identity);
-        player.DontMove = true;
+        GameObject circle = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill3, transCircle, Quaternion.identity);
+        //player.DontMove = true;
 
     }
 }

@@ -21,19 +21,20 @@ public class CircleFire : MonoBehaviour
         manager.player.DontMove = true;
         timeDestroy += Time.deltaTime;
         time += Time.deltaTime;
-        if(time >= 1f)
+        if (time >= 1f)
         {
             // Dừng di chuyển và dừng bắn
             CheckEnemy();
             time = 0f;
         }
         // Destroy vòng lửa
-        if(timeDestroy >= 5f)
+        if (timeDestroy >= 5f)
         {
             // Huỷ dừng di chuyển và tự động bắn
             manager.player.checkMove = false;
             manager.player.DontMove = false;
-            Destroy(this.gameObject);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill2, this.gameObject);
+            timeDestroy = 0f;
         }
     }
     /**
@@ -41,11 +42,11 @@ public class CircleFire : MonoBehaviour
      */
     private void CheckEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        foreach(GameObject enemyObj in enemies)
+        //GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
+        foreach (GameObject enemyObj in ObjectPool.Ins.enemyList)
         {
             float distance = Vector3.Distance(enemyObj.transform.position, transform.position);
-            if(distance <= 10f)
+            if (distance <= 10f)
             {
                 EnemyUI enemyUI = enemyObj.GetComponent<EnemyUI>();
                 Enemy enemy = enemyObj.GetComponent<Enemy>();

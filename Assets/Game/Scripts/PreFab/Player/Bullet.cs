@@ -11,9 +11,10 @@ public class BulletTest : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if(time > 2)
+        if(time > 3)
         {
-            Destroy(this.gameObject);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
+            time = 0;
         }
     }
 
@@ -21,7 +22,7 @@ public class BulletTest : MonoBehaviour
     {
         if (other.gameObject.CompareTag(Constants.Tag_Enemy))
         {
-            Destroy(this.gameObject);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
         }
     }
 }

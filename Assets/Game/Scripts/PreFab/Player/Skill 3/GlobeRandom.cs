@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class GlobeRandom : MonoBehaviour
 {
-    private ManagerScript manager;
-    [SerializeField] private GameObject boomPreFab;
-    // Start is called before the first frame update
-    void Start()
-    {
-        manager = ManagerScript.Ins;
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -33,8 +25,8 @@ public class GlobeRandom : MonoBehaviour
         if (distanceToTarget < 1f)
         {
             // tạo vụ nổ
-            GameObject boom = Instantiate(boomPreFab, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            GameObject boom = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill3_3, transform.position, Quaternion.identity);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill3_2, this.gameObject);
         }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public ManagerScript manager;
     public ScripTableEnemy data;
     public GameObject sliderObj;
     // Thông số ban đầu
@@ -26,7 +25,6 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        manager = ManagerScript.Ins;
         Calculate();
     }
 
@@ -45,12 +43,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void FixedUpdate()
     {
-        // Kiểm tra va chạm Player -> chuyển đánh Player gây dame vào máu Player
-        if (other.gameObject.CompareTag(Constants.Tag_Player))
+        // Enemy die => reset poperties Enemy
+        if (heal == 0f)
         {
-            manager.healPlayer.UpdateHealPlayer(manager.player.healCurrent, dame);
+            ResetEnemy();
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Enemy, this.gameObject);
         }
     }
 
@@ -65,17 +64,17 @@ public class Enemy : MonoBehaviour
     {
         // Kiểm tra xem Enemy và Player cái nào sinh khắc cái nào
         // Trường hợp 1: Enemy tương sinh Player
-        if (manager.nourishmentRestraintFuction.checkMutualNourishment(data.phases, manager.player.data.phases))
+        if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualNourishment(data.phases, ManagerScript.Ins.player.data.phases))
         {
             dame = data.dameMax * 0.9f;
         }
         // Trường hợp 2: Enemy tương khắc Player
-        else if (manager.nourishmentRestraintFuction.checkMutualRestraint(data.phases, manager.player.data.phases))
+        else if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualRestraint(data.phases, ManagerScript.Ins.player.data.phases))
         {
             dame = data.dameMax * 1.5f;
         }
         // Trường hợp 3: Player tương khắc Enemy
-        else if (manager.nourishmentRestraintFuction.checkMutualRestraint(manager.player.data.phases, data.phases))
+        else if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualRestraint(ManagerScript.Ins.player.data.phases, data.phases))
         {
             dame = data.dameMax * 0.5f;
         }
@@ -84,5 +83,13 @@ public class Enemy : MonoBehaviour
         {
             dame = data.dameMax;
         }
+    }
+
+    /**
+     * Reset heal Enemy
+     */
+    private void ResetEnemy()
+    {
+        heal = data.healMax;
     }
 }

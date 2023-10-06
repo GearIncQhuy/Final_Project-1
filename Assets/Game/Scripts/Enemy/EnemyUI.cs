@@ -26,18 +26,17 @@ public class EnemyUI : MonoBehaviour
         // update thanh máu
         slider.value = healCurrent;
         // update máu hiện tại của Enemy
-        enemy.heal = healCurrentEnemy - dame;
+        float healCheck = healCurrentEnemy - dame;
+        if(healCheck < 0)
+        {
+            enemy.heal = 0;
+        }
+        else
+        {
+            enemy.heal = healCurrentEnemy - dame;
+        }
         //
         enemy.checkActive = true;
         enemy.sliderObj.SetActive(true);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        // Kiểm tra va chạm viên đạn -> hiển thị thanh máu và cập nhật máu
-        if (other.gameObject.CompareTag(Constants.Tag_Bullet))
-        {
-            UpdateHealEnemy(enemy.heal, enemy.manager.player.dame);
-        }
     }
 }

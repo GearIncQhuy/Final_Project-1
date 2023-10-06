@@ -5,43 +5,53 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool checkPlayerLife;
+
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;
     public Rigidbody rigid;
+
     // Get Slider Canvas
     [SerializeField] private Slider manaSlider;
     [SerializeField] private Slider healSlider;
+
     // Poperties current
     public float manaCurrent;
     public float healCurrent;
     public float dame;
+
     // check move
     public bool checkMove;
+
     // check heal
     public bool checkHeal;
+
     // check don't move
     public bool DontMove;
+
     private void Awake()
     {
-        manager = ManagerScript.Ins;
-
+        checkPlayerLife = true;
         manaCurrent = data.manaMax;
         healCurrent = data.healMax;
         dame = data.dameMax;
-
         DontMove = false;
     }
 
     private void Start()
     {
+        manager = ManagerScript.Ins;
         rigid = gameObject.GetComponent<Rigidbody>();
         Calculate();
     }
 
     private void LateUpdate()
     {
-        
+        if(healCurrent <= 0)
+        {
+            checkPlayerLife = false;
+        }
     }
 
     private float timeRetoreMana = 0f;

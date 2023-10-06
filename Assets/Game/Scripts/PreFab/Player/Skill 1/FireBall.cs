@@ -6,49 +6,40 @@ public class FireBall : MonoBehaviour
 {
     private ManagerScript manager;
     [SerializeField] private GameObject ringOfFire;
-
+    
     private Skill_1 skill;
+
+    private float time;
+
     private void Start()
     {
         manager = ManagerScript.Ins;
         skill = manager.player.GetComponent<Skill_1>();
 
+        time = 0f;
     }
 
     private void Update()
     {
+        time += Time.deltaTime;
+
         if(skill.checkUse == 2)
         {
-            GameObject ringFire = Instantiate(ringOfFire, transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            GameObject ringFire = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill1_2, transform.position, Quaternion.identity);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill1, this.gameObject);
+        }
+        else if(time >= 5f && skill.checkUse == 1)
+        {
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill1, this.gameObject);
+            time = 0f;
         }
     }
 
-    private void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        // Tìm kiếm Enemy
-        GetEnemy();
-    }
-
-    private EnemyUI enemyUI;
-
-    /**
-     * Hàm gọi toàn bộ Enemy trong game và check con Enemy nào gần quả cầu nhất
-     */
-    private void GetEnemy()
-    {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        foreach (GameObject enemy in enemies)
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            float distance = Vector3.Distance(enemy.transform.position, transform.position);
-            if (distance <= 1f)
-            {
-                enemyUI = enemy.GetComponent<EnemyUI>();
-                // Update lại máu enemy đấy
-                enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, manager.player.GetDamePlayer(1, manager.player.data.level, true));
-                //
-                Destroy(this.gameObject);
-            }
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill1, this.gameObject);
         }
     }
 }
