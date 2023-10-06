@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8034668763490894927}
   m_Layer: 0
   m_Name: Cicrle
-  m_TagString: Untagged
+  m_TagString: PlayerSkill2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2170360495688263443
 MeshFilter:
@@ -104,10 +104,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.6068734
+  m_Height: 2.4274936
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.10687318, y: 0.01974125, z: 0}
 --- !u!114 &-8034668763490894927
 MonoBehaviour:
   m_ObjectHideFlags: 0

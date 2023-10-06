@@ -7,7 +7,12 @@ TagManager:
   - Bullet
   - Undefined
   - Enemy
-  - FireBall
+  - PlayerSkill1
+  - PlayerSkill2
+  - PlayerSkill3
+  - PlayerSkill3_2
+  - PlayerSkill3_3
+  - PlayerSkill1_2
   layers:
   - Default
   - TransparentFX

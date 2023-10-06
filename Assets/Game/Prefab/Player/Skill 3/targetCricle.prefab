@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4638472565310776718}
   m_Layer: 0
   m_Name: targetCricle
-  m_TagString: Untagged
+  m_TagString: PlayerSkill3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,4 +120,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365eff3bd546943e890c17f35269de6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  globePreFab: {fileID: 6565846715295275583, guid: 0b5f8765f6f5f44678e45ec7399fcc15, type: 3}

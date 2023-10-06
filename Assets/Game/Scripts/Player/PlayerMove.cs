@@ -78,7 +78,7 @@ public class PlayerMove : MonoBehaviour
                 player.checkMove = false;
                 // Animation Idle
             }
+            rigid.MovePosition(rigid.position + _movement);
         }
-        rigid.MovePosition(rigid.position + _movement);
     }
 }

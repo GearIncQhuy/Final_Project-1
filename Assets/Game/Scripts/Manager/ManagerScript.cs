@@ -10,9 +10,8 @@ public class ManagerScript : Singleton<ManagerScript>
 
     // Function
     public NourishmentRestraintFuction nourishmentRestraintFuction;
-    public ShootFunction shootFunction;
 
-    //
+    // Status Player
     public ManaPlayer manaPlayer;
     public HealPlayer healPlayer;
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: 
   dameMax: 200
-  healMax: 2000
+  healMax: 1000
   phases: 1
