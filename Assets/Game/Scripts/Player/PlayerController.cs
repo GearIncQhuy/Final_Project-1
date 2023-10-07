@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;
+    public UpLevelPlayer uplevel;
     public Rigidbody rigid;
 
     // Get Slider Canvas
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float manaCurrent;
     public float healCurrent;
     public float dame;
+    public float tamdanh;
 
     // check move
     public bool checkMove;
@@ -32,10 +34,24 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        // Set default poperties Player -> Continue Game
+        data.manaMax = 200 + data.level * 50;
+        data.healMax = 2000 + data.level * 200;
+        data.dameMax = 200 + data.level * 50;
+        data.tamdanh = 15 + data.level * 1;
+
+        if(data.tamdanh > 25)
+        {
+            data.tamdanh = 25;
+        }
+        data.expMax = 1000 + data.level * 500;
+
+        // Set new Game
         checkPlayerLife = true;
         manaCurrent = data.manaMax;
         healCurrent = data.healMax;
         dame = data.dameMax;
+        tamdanh = data.tamdanh;
         DontMove = false;
     }
 
@@ -43,6 +59,7 @@ public class PlayerController : MonoBehaviour
     {
         manager = ManagerScript.Ins;
         rigid = gameObject.GetComponent<Rigidbody>();
+        uplevel = gameObject.GetComponent<UpLevelPlayer>();
         Calculate();
     }
 
@@ -83,7 +100,7 @@ public class PlayerController : MonoBehaviour
      *     tương khắc -> dame giảm 10% (vũ khí tương khắc)
      *     không tương sinh không tương khắc giữ nguyên
      */
-    private void Calculate()
+    public void Calculate()
     {
         // Trường hợp 1: Vũ khí tương sinh
         if(manager.nourishmentRestraintFuction.checkMutualNourishment(manager.bullet.data.phases, data.phases)){

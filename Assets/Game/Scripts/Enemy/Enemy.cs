@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DamageNumbersPro;
 
 public class Enemy : MonoBehaviour
 {
     public ScripTableEnemy data;
     public GameObject sliderObj;
+
     // Thông số ban đầu
     public float heal;
     public float dame;
@@ -26,6 +27,16 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         Calculate();
+
+        // Set Enemy Fly
+        if(data.tag == Constants.EnemyFly)
+        {
+            data.tamdanh = ManagerScript.Ins.player.data.tamdanh - 1;
+            if (data.tamdanh > 20)
+            {
+                data.tamdanh = 20;
+            }
+        }
     }
 
     private void Update()
@@ -43,14 +54,31 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public DamageNumber expUIPlayer;
+    public DamageNumber coinUI;
     private void FixedUpdate()
     {
         // Enemy die => reset poperties Enemy
         if (heal == 0f)
         {
             ResetEnemy();
-            ObjectPool.Ins.ReturnToPool(Constants.Tag_Enemy, this.gameObject);
+
+            Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
+            numberPosition.y += 1.3f;
+            DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
+            damageNumber.SetScale(1.5f);
+            ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
+            // Random Coin
+            if (RandomCoin())
+            {
+                DamageNumber damage = coinUI.Spawn(numberPosition, 1);
+                damage.SetScale(1.5f);
+                ManagerScript.Ins.player.data.coin++;
+            }
+            ObjectPool.Ins.ReturnToPool(data.tag, this.gameObject);
         }
+
+        UpdatePoperties();
     }
 
     /**
@@ -86,10 +114,56 @@ public class Enemy : MonoBehaviour
     }
 
     /**
-     * Reset heal Enemy
+     * Hàm reset lại máu cho enemy để trả lại Pool và nếu Player có tăng level thì quái bay sẽ tăng tầm đánh
      */
+    int levelPlayer = 1;
     private void ResetEnemy()
     {
+        if(levelPlayer < ManagerScript.Ins.player.data.level)
+        {
+            if(data.tag == Constants.EnemyFly)
+            {
+                data.tamdanh += (ManagerScript.Ins.player.data.level - levelPlayer);
+                if(data.tamdanh > 20)
+                {
+                    data.tamdanh = 20;
+                }
+            }
+            levelPlayer = ManagerScript.Ins.player.data.level;
+        }
         heal = data.healMax;
     }
+
+    /**
+     * Up level Enemy -> +  ware
+     */
+    private void UpdatePoperties()
+    {
+        data.healMax = 1000 + 250 * ManagerTimeSet.Ins.level;
+        data.dameMax = 100 + 25 * ManagerTimeSet.Ins.level;
+        data.expEnemy = 100 + 25 * ManagerTimeSet.Ins.level;
+    }
+
+    private bool RandomCoin()
+    {
+        float number = Random.Range(0f, 100f);
+        if(number < 99)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+/**
+ * Định nghĩa loại Enemy
+ */
+public enum EnemyCategory
+{
+    Fly,
+    Run,
+    BOSS
 }

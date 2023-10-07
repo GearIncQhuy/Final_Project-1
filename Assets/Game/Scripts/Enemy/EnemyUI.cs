@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DamageNumbersPro;
 
 public class EnemyUI : MonoBehaviour
 {
+    public DamageNumber dameUI;
+
     public Enemy enemy;
     
     public Slider slider;
@@ -13,7 +16,6 @@ public class EnemyUI : MonoBehaviour
     {
         enemy = gameObject.GetComponent<Enemy>();
     }
-
     /**
      * Hàm update lại thanh máu cho Enemy
      * @param: healCurrentEnemy : máu hiện tại của Enemy
@@ -22,6 +24,11 @@ public class EnemyUI : MonoBehaviour
      */
     public void UpdateHealEnemy(float healCurrentEnemy, float dame)
     {
+        Vector3 numberPosition = transform.position;
+        numberPosition.y += 2f;
+        DamageNumber damageNumber = dameUI.Spawn(numberPosition, dame, ManagerScript.Ins.colorDame.GetColorPlayerDame());
+        damageNumber.SetScale(1.5f);
+
         float healCurrent = (healCurrentEnemy - dame) / enemy.data.healMax;
         // update thanh máu
         slider.value = healCurrent;

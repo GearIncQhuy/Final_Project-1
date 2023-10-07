@@ -14,4 +14,7 @@ public class ManagerScript : Singleton<ManagerScript>
     // Status Player
     public ManaPlayer manaPlayer;
     public HealPlayer healPlayer;
+    public ExpPlayer  expPlayer;
+
+    public SetColorDame colorDame;
 }

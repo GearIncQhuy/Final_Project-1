@@ -6,10 +6,14 @@ public class Constants : MonoBehaviour
 {
     // Tag Object
     public const string Tag_Player   = "Player";
+    public const string Tag_Enemy = "Enemy";
 
     // Tag Pool and Tag PreFab
     // - Tag Enemy
-    public const string Tag_Enemy    = "Enemy";
+    public const string EnemyRun = "EnemyRun";
+    public const string EnemyFly = "EnemyFly";
+    //   + Default attack
+    public const string Tag_Bullet_Enemy = "Bullet_Enemy";
     // - Tag skill Player
     //   + Default attack
     public const string Tag_Bullet   = "Bullet";

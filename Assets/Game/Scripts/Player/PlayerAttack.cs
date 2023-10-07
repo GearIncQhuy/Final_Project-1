@@ -50,7 +50,7 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
 
-            if(minPosition <= 15f)
+            if(minPosition <= player.tamdanh)
             {
                 if(timeStart >= 0f && !player.checkMove)
                 {

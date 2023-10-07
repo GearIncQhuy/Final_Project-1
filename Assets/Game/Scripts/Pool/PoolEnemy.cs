@@ -6,10 +6,8 @@ public class PoolEnemy : MonoBehaviour
 {
     [SerializeField] private Transform player;
 
-    private int enemyMax;
-    private int enemyMaxInMap;
+    public int enemyMax;
     private int enemyDefault;
-    private int enemyDie;
 
     private float timeDelay;
     private float timeStart;
@@ -25,10 +23,7 @@ public class PoolEnemy : MonoBehaviour
         //Get Enemy Max in turn
         enemyMax = NumberOfEnemies();
         timeStart += Time.deltaTime;
-        timeDelay = ManagerTimeSet.Ins.timeEndTurn / enemyMax;
-
-        
-        enemyMaxInMap = 5 * ManagerTimeSet.Ins.level * ManagerTimeSet.Ins.turn;
+        timeDelay = (ManagerTimeSet.Ins.timeEndTurn - 5) / enemyMax;
 
         // Check Player life
         if (ManagerScript.Ins.player.checkPlayerLife)
@@ -43,27 +38,27 @@ public class PoolEnemy : MonoBehaviour
                 else
                 {
                     ObjectPool.Ins.enemyList.Remove(ObjectPool.Ins.enemyList[i]);
-                    enemyDie++;
-                    if(enemyDie >= enemyMax)
-                    {
-                        enemyDie = 0;
-                    }
                 }
             }
-
-            if(coutEnemyActive < enemyMaxInMap && enemyDie <= enemyMax && timeStart >= timeDelay)
+            // coutEnemyActive < enemyMaxInMap && enemyDie <= enemyMax &&
+            if (timeStart >= timeDelay && ObjectPool.Ins.enemyList.Count <= enemyMax && ManagerTimeSet.Ins.checkSpawn)
             {
-                GameObject enemy = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Enemy, RandomPositionEnemy(15, 30f), Quaternion.identity);
+                string enemyCateggory = RandomEnemy();
+                GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(15, 30f, enemyCateggory), Quaternion.identity);
                 ObjectPool.Ins.enemyList.Add(enemy);
                 timeStart = 0f;
             }
         }
 
-        //
+        // Kiểm tra hết turn chưa clear quái trên map
         if (ManagerTimeSet.Ins.endTurn)
         {
             Clearreturn();
             ManagerTimeSet.Ins.endTurn = false;
+        }
+        if (!ManagerTimeSet.Ins.checkSpawn)
+        {
+            Clearreturn();
         }
     }
 
@@ -74,12 +69,13 @@ public class PoolEnemy : MonoBehaviour
         {
             if (enemy.activeInHierarchy)
             {
-                ObjectPool.Ins.ReturnToPool(Constants.Tag_Enemy,enemy.gameObject);
+                Enemy enemyData = enemy.GetComponent<Enemy>();
+                ObjectPool.Ins.ReturnToPool(enemyData.data.tag,enemy.gameObject);
             }
         }
     }
 
-    private int NumberOfEnemies()
+    public int NumberOfEnemies()
     {
         return ManagerTimeSet.Ins.level * ManagerTimeSet.Ins.turn * enemyDefault;
     }
@@ -87,11 +83,26 @@ public class PoolEnemy : MonoBehaviour
     /**
      * Random vị trí Enemy -> trong khoảng từ 20 -> 30f so với Player
      */
-    private Vector3 RandomPositionEnemy(float min, float max)
+    private Vector3 RandomPositionEnemy(float min, float max, string enemyCategory)
     {
         float randomAngle = Random.Range(0f, 360f);
         float randomDistance = Random.Range(min, max);
         Vector3 randomPosition = player.position + Quaternion.Euler(0, randomAngle, 0) * (Vector3.forward * randomDistance);
         return randomPosition;
+    }
+
+    /**
+     * Random enemy
+     */
+    private string RandomEnemy()
+    {
+        float random = Random.Range(0f, 100f);
+        if(random < 50)
+        {
+            return Constants.EnemyRun;
+        }else
+        {
+            return Constants.EnemyFly;
+        }
     }
 }

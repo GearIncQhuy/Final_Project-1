@@ -1437,6 +1437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneNextLevel: {fileID: 61846663}
+  time: {fileID: 1086009892}
 --- !u!1 &339521167
 GameObject:
   m_ObjectHideFlags: 0

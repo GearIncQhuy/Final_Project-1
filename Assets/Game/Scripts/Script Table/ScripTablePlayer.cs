@@ -8,12 +8,18 @@ public class ScripTablePlayer : ScriptableObject
     [Header("Poperties")]
     public float speed;
     public float jumpForce;
+    public float expMax;
+    public float tamdanh;
 
     public float dameMax;
     public float healMax;
     public float manaMax;
 
     public int level;
+
     [Header("Elemental")]
     public Phases phases;
+
+    [Header("Coin")]
+    public int coin;
 }
