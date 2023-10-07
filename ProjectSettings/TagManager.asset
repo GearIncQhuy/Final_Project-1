@@ -13,6 +13,7 @@ TagManager:
   - PlayerSkill3_2
   - PlayerSkill3_3
   - PlayerSkill1_2
+  - BulletEnemy
   layers:
   - Default
   - TransparentFX
