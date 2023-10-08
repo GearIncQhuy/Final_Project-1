@@ -7,7 +7,7 @@ public class CoinPlayer : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI coin;
     private void Update()
     {
-        coin.text = ManagerScript.Ins.player.data.coin.ToString() + " GOD";
+        coin.text = ManagerScript.Ins.player.data.coin.ToString();
     }
 }
 

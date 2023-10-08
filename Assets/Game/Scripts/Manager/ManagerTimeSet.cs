@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DamageNumbersPro;
 
 public class ManagerTimeSet : Singleton<ManagerTimeSet>
 {
@@ -47,7 +48,6 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
             }
             if (timeStart >= 1f && !endTurn)
             {
-                Debug.Log("1");
                 timeSet++;
                 timeStart = 0f;
             }
@@ -65,12 +65,20 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         return timeTurnDefault + timeAddTurn + timeAddLevel;
     }
 
+    [SerializeField] private DamageNumber nextTurn;
     // Next Turn
     private void NextTurn()
     {
         if(turn < 4)
         {
             turn++;
+            if(turn <= 3)
+            {
+                Vector3 newPosition = ManagerScript.Ins.player.transform.position;
+                newPosition.y += 4f;
+                DamageNumber damageNumber = nextTurn.Spawn(newPosition, turn);
+                damageNumber.SetScale(4f);
+            }
         }
         timeEndTurn = EndTurn();
         timeSet = 0;

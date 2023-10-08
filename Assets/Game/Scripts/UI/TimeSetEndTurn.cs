@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TimeSetEndTurn : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI time;
+    [SerializeField] private TextMeshProUGUI round;
     private void LateUpdate()
     {
         if (ManagerTimeSet.Ins.checkSpawn)
@@ -15,13 +16,13 @@ public class TimeSetEndTurn : MonoBehaviour
             int timeSet = ManagerTimeSet.Ins.timeSet;
             if(timeSet == 0)
             {
-                time.text = "0";
             }
             else
             {
                 int timeUI = timeEnd - timeSet;
                 time.text = timeUI.ToString();
             }
+            round.text = "Round: " + ManagerTimeSet.Ins.data.level.ToString();
         }
             
     }
