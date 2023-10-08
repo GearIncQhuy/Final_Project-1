@@ -52,6 +52,10 @@ public class CheatGame : MonoBehaviour
     public void ClickLevel()
     {
         ManagerTimeSet.Ins.data.level += 1;
+        if(ManagerTimeSet.Ins.data.level > 20)
+        {
+            ManagerTimeSet.Ins.data.level = 1;
+        }
     }
 
     public void ClickLevelPlayer()

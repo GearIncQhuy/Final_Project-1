@@ -10,7 +10,7 @@ public class TimeSetEndTurn : MonoBehaviour
     [SerializeField] private TextMeshProUGUI round;
     private void LateUpdate()
     {
-        if (ManagerTimeSet.Ins.checkSpawn)
+        if (ManagerTimeSet.Ins.checkSpawn && ManagerTimeSet.Ins.level < 20)
         {
             int timeEnd = (int)ManagerTimeSet.Ins.timeEndTurn;
             int timeSet = ManagerTimeSet.Ins.timeSet;

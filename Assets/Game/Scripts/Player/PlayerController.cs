@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public bool checkPlayerLife;
-
+    public bool checkBatTu = false;
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;

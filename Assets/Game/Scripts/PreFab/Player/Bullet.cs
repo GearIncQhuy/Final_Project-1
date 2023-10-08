@@ -24,5 +24,10 @@ public class BulletTest : MonoBehaviour
         {
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
         }
+
+        if (other.gameObject.CompareTag(Constants.Tag_Boss))
+        {
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
+        }
     }
 }

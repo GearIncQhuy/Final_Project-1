@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
     private bool RandomCoin()
     {
         float number = Random.Range(0f, 100f);
-        if(number < 99)
+        if(number < 50)
         {
             return true;
         }

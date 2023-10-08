@@ -5,8 +5,9 @@ using UnityEngine;
 public class Constants : MonoBehaviour
 {
     // Tag Object
-    public const string Tag_Player   = "Player";
+    public const string Tag_Player = "Player";
     public const string Tag_Enemy = "Enemy";
+    public const string Tag_Boss = "Boss";
 
     // Tag Pool and Tag PreFab
     // - Tag Enemy

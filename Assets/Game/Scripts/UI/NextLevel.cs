@@ -11,6 +11,12 @@ public class NextLevel : MonoBehaviour
     {
         ManagerTimeSet.Ins.timeSet = 0;
         ManagerTimeSet.Ins.checkSpawn = true;
+        ManagerTimeSet.Ins.data.level++;
+        if(ManagerTimeSet.Ins.data.level > 20)
+        {
+            ManagerTimeSet.Ins.data.level = 1;
+        }
         sceneNextLevel.SetActive(false);
+        ManagerScript.Ins.player.checkBatTu = false;
     }
 }

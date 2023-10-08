@@ -7,4 +7,5 @@ public class ScriptTableGame : ScriptableObject
 {
     [Header("Poperties")]
     public int level;
+    public int map;
 }
