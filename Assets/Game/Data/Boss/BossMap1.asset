@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6412f4c4912a04413a41fae73afe0c03, type: 3}
-  m_Name: GameManager
+  m_Script: {fileID: 11500000, guid: 8d11278ff68f540f0a8226fcd080d36f, type: 3}
+  m_Name: BossMap1
   m_EditorClassIdentifier: 
-  level: 19
-  map: 1
+  speed: 3
+  tamdanh: 3
+  healMax: 10000
+  dameMax: 500
