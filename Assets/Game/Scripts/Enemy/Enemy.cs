@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using DamageNumbersPro;
 
 public class Enemy : MonoBehaviour
 {
-    public ManagerScript manager;
     public ScripTableEnemy data;
     public GameObject sliderObj;
+
     // Thông số ban đầu
     public float heal;
     public float dame;
@@ -26,8 +26,17 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        manager = ManagerScript.Ins;
         Calculate();
+
+        // Set Enemy Fly
+        if(data.tag == Constants.EnemyFly)
+        {
+            data.tamdanh = ManagerScript.Ins.player.data.tamdanh - 1;
+            if (data.tamdanh > 20)
+            {
+                data.tamdanh = 20;
+            }
+        }
     }
 
     private void Update()
@@ -45,13 +54,31 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public DamageNumber expUIPlayer;
+    public DamageNumber coinUI;
+    private void FixedUpdate()
     {
-        // Kiểm tra va chạm Player -> chuyển đánh Player gây dame vào máu Player
-        if (other.gameObject.CompareTag(Constants.Tag_Player))
+        // Enemy die => reset poperties Enemy
+        if (heal == 0f)
         {
-            manager.healPlayer.UpdateHealPlayer(manager.player.healCurrent, dame);
+            ResetEnemy();
+
+            Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
+            numberPosition.y += 1.3f;
+            DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
+            damageNumber.SetScale(1.5f);
+            ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
+            // Random Coin
+            if (RandomCoin())
+            {
+                DamageNumber damage = coinUI.Spawn(numberPosition, 1);
+                damage.SetScale(1.5f);
+                ManagerScript.Ins.player.data.coin++;
+            }
+            ObjectPool.Ins.ReturnToPool(data.tag, this.gameObject);
         }
+
+        UpdatePoperties();
     }
 
     /**
@@ -65,17 +92,17 @@ public class Enemy : MonoBehaviour
     {
         // Kiểm tra xem Enemy và Player cái nào sinh khắc cái nào
         // Trường hợp 1: Enemy tương sinh Player
-        if (manager.nourishmentRestraintFuction.checkMutualNourishment(data.phases, manager.player.data.phases))
+        if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualNourishment(data.phases, ManagerScript.Ins.player.data.phases))
         {
             dame = data.dameMax * 0.9f;
         }
         // Trường hợp 2: Enemy tương khắc Player
-        else if (manager.nourishmentRestraintFuction.checkMutualRestraint(data.phases, manager.player.data.phases))
+        else if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualRestraint(data.phases, ManagerScript.Ins.player.data.phases))
         {
             dame = data.dameMax * 1.5f;
         }
         // Trường hợp 3: Player tương khắc Enemy
-        else if (manager.nourishmentRestraintFuction.checkMutualRestraint(manager.player.data.phases, data.phases))
+        else if (ManagerScript.Ins.nourishmentRestraintFuction.checkMutualRestraint(ManagerScript.Ins.player.data.phases, data.phases))
         {
             dame = data.dameMax * 0.5f;
         }
@@ -85,4 +112,58 @@ public class Enemy : MonoBehaviour
             dame = data.dameMax;
         }
     }
+
+    /**
+     * Hàm reset lại máu cho enemy để trả lại Pool và nếu Player có tăng level thì quái bay sẽ tăng tầm đánh
+     */
+    int levelPlayer = 1;
+    private void ResetEnemy()
+    {
+        if(levelPlayer < ManagerScript.Ins.player.data.level)
+        {
+            if(data.tag == Constants.EnemyFly)
+            {
+                data.tamdanh += (ManagerScript.Ins.player.data.level - levelPlayer);
+                if(data.tamdanh > 20)
+                {
+                    data.tamdanh = 20;
+                }
+            }
+            levelPlayer = ManagerScript.Ins.player.data.level;
+        }
+        heal = data.healMax;
+    }
+
+    /**
+     * Up level Enemy -> +  ware
+     */
+    private void UpdatePoperties()
+    {
+        data.healMax = 1000 + 250 * ManagerTimeSet.Ins.level;
+        data.dameMax = 100 + 25 * ManagerTimeSet.Ins.level;
+        data.expEnemy = 100 + 25 * ManagerTimeSet.Ins.level;
+    }
+
+    private bool RandomCoin()
+    {
+        float number = Random.Range(0f, 100f);
+        if(number < 99)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+
+/**
+ * Định nghĩa loại Enemy
+ */
+public enum EnemyCategory
+{
+    Fly,
+    Run,
+    BOSS
 }

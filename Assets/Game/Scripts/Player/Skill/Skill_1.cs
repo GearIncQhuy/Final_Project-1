@@ -85,12 +85,12 @@ public class Skill_1 : MonoBehaviour
      */
     private void InstanFireBall()
     {
-        GameObject fireBall = Instantiate(fireBallPreFab, hard.transform.position, Quaternion.identity);
+        //GameObject fireBall = Instantiate(fireBallPreFab, hard.transform.position, Quaternion.identity);
+        GameObject fireBall = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill1, hard.transform.position, Quaternion.identity);
         Rigidbody rb = fireBall.GetComponent<Rigidbody>();
         if (rb != null)
         {
             rb.velocity = hard.transform.forward * 20f;
-            Destroy(fireBall, 5f);
         }
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5275237610442371040}
   m_Layer: 0
   m_Name: globe
-  m_TagString: Untagged
+  m_TagString: PlayerSkill3_2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -148,4 +148,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29cf03874b1e24c318c126c7347dd1ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boomPreFab: {fileID: 8157761212180212916, guid: 14adac31db56748a289cec7d65bb1bc7, type: 3}

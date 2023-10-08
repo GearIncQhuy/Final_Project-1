@@ -16,7 +16,8 @@ public class BoomSkill3 : MonoBehaviour
         if(time >= 0.2f)
         {
             SelecEnemy();
-            Destroy(this.gameObject);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill3_3, this.gameObject);
+            time = 0f;
         }
     }
 
@@ -26,8 +27,7 @@ public class BoomSkill3 : MonoBehaviour
     private EnemyUI enemyUI;
     private void SelecEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in ObjectPool.Ins.enemyList)
         {
             float distance = Vector3.Distance(enemy.transform.position, transform.position);
             if (distance <= 8f)

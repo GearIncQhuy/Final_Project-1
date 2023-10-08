@@ -48,8 +48,9 @@ public class Skill_2 : MonoBehaviour
     {
         if(manaPlayer.UseMana(player.manaCurrent, 2, player.data.level))
         {
-            GameObject skill2 = Instantiate(circle, transform.position, Quaternion.identity);
+            GameObject skill2 = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill2, transform.position, Quaternion.identity);
             player.checkHeal = true;
+            player.DontMove = true;
             startTime = true;
         }
     }

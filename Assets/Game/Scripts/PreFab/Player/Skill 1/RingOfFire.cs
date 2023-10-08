@@ -16,12 +16,12 @@ public class RingOfFire : MonoBehaviour
     private void Update()
     {
         time += Time.deltaTime;
-        if(time >= 2f)
+        if(time >= 1f)
         {
-            Destroy(this.gameObject);
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill1_2, this.gameObject);
+            time = 0f;
         }
     }
-
     private void FixedUpdate()
     {
         if (checkEnd)
@@ -29,11 +29,11 @@ public class RingOfFire : MonoBehaviour
             SelecEnemy();
         }
     }
+
     private EnemyUI enemyUI;
     private void SelecEnemy()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        foreach (GameObject enemy in enemies)
+        foreach (GameObject enemy in ObjectPool.Ins.enemyList)
         {
             float distance = Vector3.Distance(enemy.transform.position, transform.position);
             if (distance <= 8f)
