@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4e5ad648dc714e92b00743c09a080e1, type: 3}
+  m_Name: Enth
+  m_EditorClassIdentifier: 
+  icon: {fileID: -1130017131, guid: 06089487b687b4b2c92be3d804e496b2, type: 3}
+  dame: 0
+  speedFire: 0
+  speed: -1
+  mana: 0
+  heal: 1000
+  checkUse: 0
+  phases: 1
+  sprite: {fileID: 425168317, guid: 458d378fae8374fa88c376e6082c4fbe, type: 3}

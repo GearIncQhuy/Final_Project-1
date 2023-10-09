@@ -68,7 +68,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (joystick.Horizontal != 0 || joystick.Vertical != 0)
             {
-                Vector3 direction = Vector3.RotateTowards(transform.forward, _movement, player.data.speed * Time.deltaTime, 0.0f);
+                Vector3 direction = Vector3.RotateTowards(transform.forward, _movement, player.speedCurrent * Time.deltaTime, 0.0f);
                 transform.rotation = Quaternion.LookRotation(direction);
                 player.checkMove = true;
                 // Animation Run

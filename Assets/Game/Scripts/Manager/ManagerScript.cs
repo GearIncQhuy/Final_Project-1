@@ -19,4 +19,6 @@ public class ManagerScript : Singleton<ManagerScript>
 
     // Pooling Object
     public PoolEnemy poolEnemy;
+
+    
 }
