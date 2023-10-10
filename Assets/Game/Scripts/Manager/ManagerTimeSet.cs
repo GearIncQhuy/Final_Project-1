@@ -6,6 +6,7 @@ using DamageNumbersPro;
 public class ManagerTimeSet : Singleton<ManagerTimeSet>
 {
     [SerializeField] private GameObject sceneNextLevel;
+    [SerializeField] private GameObject sceneLevelAgain;
     public ScriptTableGame data;
 
     public float timeEndTurn;
@@ -91,13 +92,20 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         checkSpawn = false;
         ManagerScript.Ins.player.checkBatTu = true;
         
-        sceneNextLevel.SetActive(true);
+        if(data.level > 0 && data.level < 20)
+        {
+            sceneNextLevel.SetActive(true);
+        }
+        else if(data.level == 20)
+        {
+            sceneLevelAgain.SetActive(true);
+        }
+
         timeEndTurn = EndTurn();
         turn = 1;
         if(data.level > 20)
         {
             data.level = 1;
-            data.map++;
         }
         ManagerScript.Ins.player.healCurrent = ManagerScript.Ins.player.data.healMax;
         ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);

@@ -52,6 +52,10 @@ public class PlayerController : MonoBehaviour
         {
             data.tamdanh = 25;
         }
+        if(data.level > 50)
+        {
+            data.level = 50;
+        }
 
         data.expMax = 1000 + data.level * 500;
 

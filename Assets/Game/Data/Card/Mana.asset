@@ -21,3 +21,4 @@ MonoBehaviour:
   checkUse: 0
   phases: 3
   sprite: {fileID: -1295533505, guid: 458d378fae8374fa88c376e6082c4fbe, type: 3}
+  price: 20

@@ -18,6 +18,7 @@ MonoBehaviour:
   speed: 0
   mana: 20
   heal: 0
-  checkUse: 1
+  checkUse: 0
   phases: 0
   sprite: {fileID: -2107704585, guid: 458d378fae8374fa88c376e6082c4fbe, type: 3}
+  price: 20

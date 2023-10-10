@@ -13,6 +13,7 @@ public class Card
     public float heal;
     public int checkUse;
     public Phases phases;
+    public int price;
     public Sprite sprite;
 
     private ScriptTableCard cardCurrent;
@@ -28,6 +29,8 @@ public class Card
         this.checkUse = card.checkUse;
         this.phases = card.phases;
         this.sprite = card.sprite;
+        this.price = card.price;
+
         cardCurrent = card;
     }
 

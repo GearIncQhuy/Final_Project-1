@@ -213,8 +213,6 @@ public class BossMap1 : MonoBehaviour
         dem = 0; 
 
         ManagerTimeSet.Ins.NextLevel();
-        ManagerTimeSet.Ins.data.map++;
-
         this.gameObject.SetActive(false);
     }
 

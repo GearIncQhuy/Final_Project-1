@@ -63,13 +63,12 @@ public class PoolEnemy : MonoBehaviour
             Clearreturn();
         }
 
-        if(ManagerTimeSet.Ins.data.level == 20)
+        if(ManagerTimeSet.Ins.data.level == 20 && ManagerTimeSet.Ins.checkSpawn)
         {
             switch (ManagerTimeSet.Ins.data.map)
             {
                 case 1:
                     BossMap1.SetActive(true);
-                   
                     break;
             }
         }
@@ -110,12 +109,31 @@ public class PoolEnemy : MonoBehaviour
     private string RandomEnemy()
     {
         float random = Random.Range(0f, 100f);
-        if(random < 50)
+        
+        switch (ManagerTimeSet.Ins.data.map)
         {
-            return Constants.EnemyRun;
-        }else
-        {
-            return Constants.EnemyFly;
+            case 1:
+                if (ManagerTimeSet.Ins.data.level > 0 && ManagerTimeSet.Ins.data.level <= 10)
+                {
+                    return Constants.EnemyRun;
+                }
+                else
+                {
+                    if (random < 50)
+                    {
+                        return Constants.EnemyRun;
+                    }
+                    else
+                    {
+                        return Constants.EnemyFly;
+                    }
+                }
+            //case 2:
+            //    break;
+            //case 3:
+            //    break;
+            default:
+                return Constants.EnemyRun;
         }
     }
 

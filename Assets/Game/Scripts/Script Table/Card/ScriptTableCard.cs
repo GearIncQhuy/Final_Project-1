@@ -17,4 +17,6 @@ public class ScriptTableCard : ScriptableObject
     [Header("Elemental")]
     public Phases phases;
     public Sprite sprite;
+    [Header("Price")]
+    public int price;
 }
