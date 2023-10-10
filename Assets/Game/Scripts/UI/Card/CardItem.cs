@@ -60,14 +60,18 @@ public class CardItem : MonoBehaviour
 
     public void ClickCard()
     {
-        cardCurrent.UpdateUse();
-        ManagerScript.Ins.player.healCurrent += cardCurrent.heal;
-        ManagerScript.Ins.player.dame += cardCurrent.dame;
-        ManagerScript.Ins.player.speedCurrent += cardCurrent.speed;
-        ManagerScript.Ins.player.tamdanh += cardCurrent.speedFire;
-        ManagerScript.Ins.player.manaCurrent += cardCurrent.mana;
-        ManagerScript.Ins.player.data.phases = cardCurrent.phases;
-        ManagerScript.Ins.player.Calculate();
-        NextLevel.ClickNextLevel();
+        if(ManagerScript.Ins.player.data.coin >= cardCurrent.price)
+        {
+            ManagerScript.Ins.player.data.coin -= cardCurrent.price;
+            cardCurrent.UpdateUse();
+            ManagerScript.Ins.player.healCurrent += cardCurrent.heal;
+            ManagerScript.Ins.player.dame += cardCurrent.dame;
+            ManagerScript.Ins.player.speedCurrent += cardCurrent.speed;
+            ManagerScript.Ins.player.tamdanh += cardCurrent.speedFire;
+            ManagerScript.Ins.player.manaCurrent += cardCurrent.mana;
+            ManagerScript.Ins.player.data.phases = cardCurrent.phases;
+            ManagerScript.Ins.player.Calculate();
+            NextLevel.ClickNextLevel();
+        }
     }
 }
