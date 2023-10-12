@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   jumpForce: 0
-  expMax: 1500
-  tamdanh: 16
-  dameMax: 250
-  healMax: 2200
-  manaMax: 250
-  level: 1
-  phases: 3
-  coin: 0
+  expMax: 26000
+  tamdanh: 25
+  dameMax: 2700
+  healMax: 12000
+  manaMax: 2700
+  level: 50
+  phases: 0
+  coin: 7

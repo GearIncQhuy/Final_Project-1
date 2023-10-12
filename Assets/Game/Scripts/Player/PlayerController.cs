@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public bool checkPlayerLife;
-
+    public bool checkBatTu = false;
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;
@@ -22,6 +22,14 @@ public class PlayerController : MonoBehaviour
     public float healCurrent;
     public float dame;
     public float tamdanh;
+    public float speedCurrent;
+    //
+    [SerializeField] private List<ScriptTableCard> listCards = new List<ScriptTableCard>();
+    private float manaBonus;
+    private float healBonus;
+    private float dameBonus;
+    private float tamdanhBonus;
+    private float speedBonus;
 
     // check move
     public bool checkMove;
@@ -44,14 +52,15 @@ public class PlayerController : MonoBehaviour
         {
             data.tamdanh = 25;
         }
+        if(data.level > 50)
+        {
+            data.level = 50;
+        }
+
         data.expMax = 1000 + data.level * 500;
 
         // Set new Game
         checkPlayerLife = true;
-        manaCurrent = data.manaMax;
-        healCurrent = data.healMax;
-        dame = data.dameMax;
-        tamdanh = data.tamdanh;
         DontMove = false;
     }
 
@@ -60,6 +69,7 @@ public class PlayerController : MonoBehaviour
         manager = ManagerScript.Ins;
         rigid = gameObject.GetComponent<Rigidbody>();
         uplevel = gameObject.GetComponent<UpLevelPlayer>();
+        UpdatePopertiesPlayer();
         Calculate();
     }
 
@@ -172,5 +182,25 @@ public class PlayerController : MonoBehaviour
             healCurrent = data.healMax;
         }
         healSlider.value = healCurrent / data.healMax;
+    }
+
+    public void UpdatePopertiesPlayer()
+    {
+        if (listCards.Count > 0)
+        {
+            for (int i = 0; i < listCards.Count; i++)
+            {
+                dameBonus += listCards[i].dame * listCards[i].checkUse;
+                manaBonus += listCards[i].mana * listCards[i].checkUse;
+                healBonus += listCards[i].heal * listCards[i].checkUse;
+                speedBonus += listCards[i].speed * listCards[i].checkUse;
+                tamdanhBonus += listCards[i].speedFire * listCards[i].checkUse;
+            }
+        }
+        manaCurrent = data.manaMax + manaBonus;
+        healCurrent = data.healMax + healBonus;
+        dame = data.dameMax + dameBonus;
+        tamdanh = data.tamdanh + tamdanhBonus;
+        speedCurrent = data.speed + speedBonus;
     }
 }

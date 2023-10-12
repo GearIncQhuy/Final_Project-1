@@ -10,11 +10,15 @@ public class ManagerScript : Singleton<ManagerScript>
 
     // Function
     public NourishmentRestraintFuction nourishmentRestraintFuction;
+    public SetColorDame colorDame;
 
     // Status Player
     public ManaPlayer manaPlayer;
     public HealPlayer healPlayer;
     public ExpPlayer  expPlayer;
 
-    public SetColorDame colorDame;
+    // Pooling Object
+    public PoolEnemy poolEnemy;
+
+    
 }

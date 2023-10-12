@@ -5,6 +5,7 @@ using UnityEngine;
 public class PoolEnemy : MonoBehaviour
 {
     [SerializeField] private Transform player;
+    [SerializeField] private GameObject BossMap1;
 
     public int enemyMax;
     private int enemyDefault;
@@ -21,7 +22,10 @@ public class PoolEnemy : MonoBehaviour
     void Update()
     {
         //Get Enemy Max in turn
-        enemyMax = NumberOfEnemies();
+        if(ManagerTimeSet.Ins.data.level < 20)
+        {
+            enemyMax = NumberOfEnemies();
+        }
         timeStart += Time.deltaTime;
         timeDelay = (ManagerTimeSet.Ins.timeEndTurn - 5) / enemyMax;
 
@@ -41,11 +45,9 @@ public class PoolEnemy : MonoBehaviour
                 }
             }
             // coutEnemyActive < enemyMaxInMap && enemyDie <= enemyMax &&
-            if (timeStart >= timeDelay && ObjectPool.Ins.enemyList.Count <= enemyMax && ManagerTimeSet.Ins.checkSpawn)
+            if (timeStart >= timeDelay && ObjectPool.Ins.enemyList.Count <= enemyMax && ManagerTimeSet.Ins.checkSpawn && ManagerTimeSet.Ins.data.level < 20)
             {
-                string enemyCateggory = RandomEnemy();
-                GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(15, 30f, enemyCateggory), Quaternion.identity);
-                ObjectPool.Ins.enemyList.Add(enemy);
+                SpawnEnemy(player.transform);
                 timeStart = 0f;
             }
         }
@@ -60,9 +62,19 @@ public class PoolEnemy : MonoBehaviour
         {
             Clearreturn();
         }
+
+        if(ManagerTimeSet.Ins.data.level == 20 && ManagerTimeSet.Ins.checkSpawn)
+        {
+            switch (ManagerTimeSet.Ins.data.map)
+            {
+                case 1:
+                    BossMap1.SetActive(true);
+                    break;
+            }
+        }
     }
 
-    private void Clearreturn()
+    public void Clearreturn()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
         foreach(GameObject enemy in enemies)
@@ -83,11 +95,11 @@ public class PoolEnemy : MonoBehaviour
     /**
      * Random vị trí Enemy -> trong khoảng từ 20 -> 30f so với Player
      */
-    private Vector3 RandomPositionEnemy(float min, float max, string enemyCategory)
+    private Vector3 RandomPositionEnemy(float min, float max, string enemyCategory, Transform trans)
     {
         float randomAngle = Random.Range(0f, 360f);
         float randomDistance = Random.Range(min, max);
-        Vector3 randomPosition = player.position + Quaternion.Euler(0, randomAngle, 0) * (Vector3.forward * randomDistance);
+        Vector3 randomPosition = trans.position + Quaternion.Euler(0, randomAngle, 0) * (Vector3.forward * randomDistance);
         return randomPosition;
     }
 
@@ -97,12 +109,38 @@ public class PoolEnemy : MonoBehaviour
     private string RandomEnemy()
     {
         float random = Random.Range(0f, 100f);
-        if(random < 50)
+        
+        switch (ManagerTimeSet.Ins.data.map)
         {
-            return Constants.EnemyRun;
-        }else
-        {
-            return Constants.EnemyFly;
+            case 1:
+                if (ManagerTimeSet.Ins.data.level > 0 && ManagerTimeSet.Ins.data.level <= 10)
+                {
+                    return Constants.EnemyRun;
+                }
+                else
+                {
+                    if (random < 50)
+                    {
+                        return Constants.EnemyRun;
+                    }
+                    else
+                    {
+                        return Constants.EnemyFly;
+                    }
+                }
+            //case 2:
+            //    break;
+            //case 3:
+            //    break;
+            default:
+                return Constants.EnemyRun;
         }
+    }
+
+    public void SpawnEnemy(Transform trans)
+    {
+        string enemyCateggory = RandomEnemy();
+        GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(15, 30f, enemyCateggory, trans), Quaternion.identity);
+        ObjectPool.Ins.enemyList.Add(enemy);
     }
 }

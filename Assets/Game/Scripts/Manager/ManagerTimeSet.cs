@@ -6,6 +6,7 @@ using DamageNumbersPro;
 public class ManagerTimeSet : Singleton<ManagerTimeSet>
 {
     [SerializeField] private GameObject sceneNextLevel;
+    [SerializeField] private GameObject sceneLevelAgain;
     public ScriptTableGame data;
 
     public float timeEndTurn;
@@ -36,7 +37,7 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
                 endTurn = false;
             }
         }
-        if (checkSpawn)
+        if (checkSpawn && data.level < 20)
         {
             level = data.level;  // 0
             timeEndTurn = EndTurn(); // 20
@@ -51,18 +52,17 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
                 timeSet++;
                 timeStart = 0f;
             }
-
-            
         }
     }
 
     // End Turn (sub ware)
     private float EndTurn()
     {
-        float timeTurnDefault = 5f;
+        float timeTurnDefault = 40f;
         float timeAddTurn = turn * 5;
         float timeAddLevel = level * 5;
-        return timeTurnDefault + timeAddTurn + timeAddLevel;
+        //return timeTurnDefault + timeAddTurn + timeAddLevel;
+        return 5f;
     }
 
     [SerializeField] private DamageNumber nextTurn;
@@ -87,13 +87,26 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
     }
 
     // Next Level
-    private void NextLevel()
+    public void NextLevel()
     {
         checkSpawn = false;
-        sceneNextLevel.SetActive(true);
+        ManagerScript.Ins.player.checkBatTu = true;
+        
+        if(data.level > 0 && data.level < 20)
+        {
+            sceneNextLevel.SetActive(true);
+        }
+        else if(data.level == 20)
+        {
+            sceneLevelAgain.SetActive(true);
+        }
+
         timeEndTurn = EndTurn();
         turn = 1;
-        data.level++;
+        if(data.level > 20)
+        {
+            data.level = 1;
+        }
         ManagerScript.Ins.player.healCurrent = ManagerScript.Ins.player.data.healMax;
         ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);
     }

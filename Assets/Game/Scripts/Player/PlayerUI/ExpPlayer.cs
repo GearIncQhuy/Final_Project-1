@@ -12,8 +12,11 @@ public class ExpPlayer : MonoBehaviour
     public float expCurrent = 0f;
     public void UpdateExpPlayerCurrent(float expEnemy)
     {
-        expCurrent += expEnemy;
-        if (expCurrent > ManagerScript.Ins.player.data.expMax)
+        if(ManagerScript.Ins.player.data.level <= 50)
+        {
+            expCurrent += expEnemy;
+        }
+        if (expCurrent > ManagerScript.Ins.player.data.expMax && ManagerScript.Ins.player.data.level <= 50)
         {
             ManagerScript.Ins.player.uplevel.UpLevel();
             expCurrent = 0f;
