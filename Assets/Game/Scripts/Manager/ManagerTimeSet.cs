@@ -61,8 +61,8 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         float timeTurnDefault = 40f;
         float timeAddTurn = turn * 5;
         float timeAddLevel = level * 5;
-        //return timeTurnDefault + timeAddTurn + timeAddLevel;
-        return 5f;
+        return timeTurnDefault + timeAddTurn + timeAddLevel;
+        //return 5f;
     }
 
     [SerializeField] private DamageNumber nextTurn;

@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6412f4c4912a04413a41fae73afe0c03, type: 3}
   m_Name: GameManager
   m_EditorClassIdentifier: 
-  level: 2
+  level: 1
   map: 1
