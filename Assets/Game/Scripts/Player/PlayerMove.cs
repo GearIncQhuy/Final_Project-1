@@ -7,12 +7,14 @@ public class PlayerMove : MonoBehaviour
     private PlayerController player;
     private Rigidbody rigid;
     [SerializeField] private FloatingJoystick joystick;
+    private Animator animator;
 
     //public float rotationSpeed;
     private void Awake()
     {
         player = gameObject.GetComponent<PlayerController>();
         rigid = gameObject.GetComponent<Rigidbody>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     private void LateUpdate()
@@ -68,6 +70,7 @@ public class PlayerMove : MonoBehaviour
         {
             if (joystick.Horizontal != 0 || joystick.Vertical != 0)
             {
+                animator.SetBool(Constants.Tag_Player_Run, true);
                 Vector3 direction = Vector3.RotateTowards(transform.forward, _movement, player.speedCurrent * Time.deltaTime, 0.0f);
                 transform.rotation = Quaternion.LookRotation(direction);
                 player.checkMove = true;
@@ -75,6 +78,7 @@ public class PlayerMove : MonoBehaviour
             }
             else if (joystick.Horizontal == 0 && joystick.Vertical == 0)
             {
+                animator.SetBool(Constants.Tag_Player_Run, false);
                 player.checkMove = false;
                 // Animation Idle
             }

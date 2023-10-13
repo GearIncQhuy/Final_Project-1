@@ -50,7 +50,6 @@ public class ManagerMap : Singleton<ManagerMap>
         {
             GameObject MapObj = Instantiate(PreFab_map, MapPosition.position, Quaternion.identity);
             ListMap.Add(MapObj);
-            //ListMap.RemoveAt(0);
             Destroy(ListMap[0]);
             ManagerScript.Ins.player.transform.position = MapPosition.position;
             data.map++;

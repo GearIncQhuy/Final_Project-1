@@ -17,6 +17,7 @@ public class BossMap1 : MonoBehaviour
     
     [SerializeField] private GameObject skill2;
     [SerializeField] private GameObject skill22;
+    private Animator animator;
     public ScriptTableMap1 data;
     public BossMap1State currentState;
     private float speed;
@@ -33,6 +34,8 @@ public class BossMap1 : MonoBehaviour
 
     private void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
+
         speed = data.speed;
         healCurrent = data.healMax;
         dameCurrent = data.dameMax;
@@ -88,9 +91,12 @@ public class BossMap1 : MonoBehaviour
         timeSkill += Time.deltaTime;
         // Skill 1
 
-        if (timeSkill >= 10f && distance < 18f && timeSkill <= 15f)
+        if (timeSkill >= 10f && distance < 18f && timeSkill <= 10f)
         {
-            currentState = BossMap1State.Attack2;
+            if(currentState != BossMap1State.Defense)
+            {
+                currentState = BossMap1State.Attack2;
+            }
         }
         // Skill 2
         if(timeSkill >= 30f && currentState == BossMap1State.Move)
@@ -116,9 +122,9 @@ public class BossMap1 : MonoBehaviour
     private void IdleState()
     {
         // animation
-
+        animator.Play(Constants.BossMap1_Idle);
         // change move
-        if(time >= 0.5f)
+        if (time >= 0.5f)
         {
             currentState = BossMap1State.Move;
             timeStart = false;
@@ -129,12 +135,14 @@ public class BossMap1 : MonoBehaviour
     private void MoveState(float distance)
     {
         // animation
-
+        animator.Play(Constants.BossMap1_Move);
         // Move
-        if(distance > data.tamdanh)
+        if (distance > data.tamdanh)
         {
             Vector3 target = ManagerScript.Ins.player.transform.position - transform.position;
-            transform.Translate(target.normalized * speed * Time.deltaTime);
+            Quaternion newRotation = Quaternion.LookRotation(target);
+            transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, 0);
+            transform.Translate(Vector3.forward * data.speed * Time.deltaTime);
         }
         // check attack 1
         if(distance < data.tamdanh)
@@ -144,16 +152,16 @@ public class BossMap1 : MonoBehaviour
         }
     }
 
-    private float timeAttack1 = 1f;
+    private float timeAttack1 = 2f;
     private void Attack1(float distance)
     {
         if (distance < data.tamdanh)
         {
-            // animation
-
             timeAttack1 += Time.deltaTime;
             if (timeAttack1 >= 2f)
             {
+                // animation
+                animator.Play(Constants.BossMap1_Attack1);
                 ManagerScript.Ins.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, dameCurrent);
                 timeAttack1 = 0f;
             }
@@ -167,6 +175,9 @@ public class BossMap1 : MonoBehaviour
     private float timeUseAttack2 = 0f;
     private void Attack2()
     {
+        // animation
+        animator.Play(Constants.BossMap1_Idle);
+
         timeUseAttack2 += Time.deltaTime;
         skill2.SetActive(true);
         if(timeUseAttack2 > 2f)
@@ -179,12 +190,16 @@ public class BossMap1 : MonoBehaviour
     private float timePool = 0f;
     private int useAttack3 = 1;
     private int spawnEnemy = 10;
+
     private void Attack3()
     {
+        // animation
+        animator.Play(Constants.BossMap1_SpawnEnemy);
+
         timePool += Time.deltaTime;
         if(timePool >= 0.5f)
         {
-            for(int i = 0; i < spawnEnemy; i++)
+            for (int i = 0; i < spawnEnemy; i++)
             {
                 ManagerScript.Ins.poolEnemy.SpawnEnemy(transform);
             }
@@ -202,18 +217,24 @@ public class BossMap1 : MonoBehaviour
         ObjectPool.Ins.enemyList.Remove(this.gameObject);
     }
 
+    private float timeDie = 0f;
     private void Die()
     {
-        ResetPoperties();
+        timeDie += Time.deltaTime;
+        animator.Play(Constants.BossMap1_Die);
+        if(timeDie >= 0.5f)
+        {
+            ResetPoperties();
 
-        time = 0f;
-        timeSkill = 0f;
-        timeStart = true;
-        useDefense = true;
-        dem = 0; 
-
-        ManagerTimeSet.Ins.NextLevel();
-        this.gameObject.SetActive(false);
+            time = 0f;
+            timeSkill = 0f;
+            timeStart = true;
+            useDefense = true;
+            dem = 0;
+            timeDie = 0f;
+            ManagerTimeSet.Ins.NextLevel();
+            this.gameObject.SetActive(false);
+        }
     }
 
     private float timeBatTu = 0f;
@@ -221,6 +242,9 @@ public class BossMap1 : MonoBehaviour
     private bool checkSpawnDef = true;
     private void Defense()
     {
+        // animation
+        animator.Play(Constants.BossMap1_SpawnEnemy);
+
         battu = true;
         timeBatTu += Time.deltaTime;
         if (checkSpawnDef)

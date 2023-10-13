@@ -140,7 +140,7 @@ public class PoolEnemy : MonoBehaviour
     public void SpawnEnemy(Transform trans)
     {
         string enemyCateggory = RandomEnemy();
-        GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(15, 30f, enemyCateggory, trans), Quaternion.identity);
+        GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(10, 15f, enemyCateggory, trans), Quaternion.identity);
         ObjectPool.Ins.enemyList.Add(enemy);
     }
 }
