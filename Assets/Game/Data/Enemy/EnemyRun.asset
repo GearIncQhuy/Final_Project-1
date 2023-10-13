@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed11a580d043455ca92841568fc2bdb, type: 3}
   m_Name: EnemyRun
   m_EditorClassIdentifier: 
-  speed: 2
-  tamdanh: 1
-  speedFire: 2
-  dameMax: 125
-  healMax: 1250
-  expEnemy: 125
+  speed: 3
+  tamdanh: 3
+  speedFire: 1
+  dameMax: 100
+  healMax: 1000
+  expEnemy: 100
   phases: 1
   category: 1
   tag: EnemyRun

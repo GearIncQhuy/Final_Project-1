@@ -21,4 +21,4 @@ MonoBehaviour:
   manaMax: 250
   level: 1
   phases: 0
-  coin: 9
+  coin: 0

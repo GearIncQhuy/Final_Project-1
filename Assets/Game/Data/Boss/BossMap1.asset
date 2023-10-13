@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: BossMap1
   m_EditorClassIdentifier: 
   speed: 3
-  tamdanh: 3
-  healMax: 10000
-  dameMax: 500
+  tamdanh: 8
+  healMax: 5000000
+  dameMax: 1000

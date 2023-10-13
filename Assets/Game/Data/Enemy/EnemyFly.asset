@@ -15,9 +15,9 @@ MonoBehaviour:
   speed: 5
   tamdanh: 15
   speedFire: 3
-  dameMax: 25
-  healMax: 250
-  expEnemy: 150
+  dameMax: 150
+  healMax: 1500
+  expEnemy: 125
   phases: 1
   category: 0
   tag: EnemyFly
