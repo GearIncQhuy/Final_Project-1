@@ -25,10 +25,6 @@ public class PlayerAttack : MonoBehaviour
      */
     private void CheckDistanEnemy()
     {
-        // Lấy toàn bộ enemy trong game có tag enemy -> hiện tại ít e còn thấy nó nhận được không biết nhiều nhận được không
-        //GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
-        //foreach (GameObject enemy in enemies)
-
         if(ObjectPool.Ins.enemyList.Count > 0)
         {
             float[] position = new float[ObjectPool.Ins.enemyList.Count];
@@ -56,6 +52,9 @@ public class PlayerAttack : MonoBehaviour
                 {
                     if(Time.time - timeStart >= 0.5f)
                     {
+                        Vector3 target = ObjectPool.Ins.enemyList[indexMin].transform.position - transform.position;
+                        Quaternion newRotation = Quaternion.LookRotation(target);
+                        transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, 0);
                         GameObject bullet = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Bullet, transformBullet.position, Quaternion.identity);
                         if (bullet != null)
                         {
