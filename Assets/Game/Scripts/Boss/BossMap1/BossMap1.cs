@@ -157,6 +157,7 @@ public class BossMap1 : MonoBehaviour
     {
         if (distance < data.tamdanh)
         {
+            //animator.Play(Constants.BossMap1_Attack1);
             timeAttack1 += Time.deltaTime;
             if (timeAttack1 >= 2f)
             {
@@ -205,14 +206,20 @@ public class BossMap1 : MonoBehaviour
             }
             timePool = 0f;
             useAttack3++;
-            spawnEnemy *= useAttack3;
+            spawnEnemy = useAttack3;
             timeSkill = -10f;
             currentState = BossMap1State.Move;
         }
     }
 
-    private void ResetPoperties()
+    public void ResetPoperties()
     {
+        time = 0f;
+        timeSkill = 0f;
+        timeStart = true;
+        useDefense = true;
+        dem = 0;
+        timeDie = 0f;
         healCurrent = data.healMax;
         ObjectPool.Ins.enemyList.Remove(this.gameObject);
     }
@@ -222,7 +229,8 @@ public class BossMap1 : MonoBehaviour
     {
         timeDie += Time.deltaTime;
         animator.Play(Constants.BossMap1_Die);
-        if(timeDie >= 0.5f)
+
+        if(timeDie >= 2f)
         {
             ResetPoperties();
 
@@ -243,10 +251,12 @@ public class BossMap1 : MonoBehaviour
     private void Defense()
     {
         // animation
-        animator.Play(Constants.BossMap1_SpawnEnemy);
+        animator.Play(Constants.BossMap1_Idle);
 
         battu = true;
         timeBatTu += Time.deltaTime;
+        //StartCoroutine(Flash());
+
         if (checkSpawnDef)
         {
             for(int i = 0; i < spawnEnemyDef; i++)
@@ -260,6 +270,20 @@ public class BossMap1 : MonoBehaviour
             healCurrent += data.healMax * (3 / 10);
             battu = false;
             currentState = BossMap1State.Move;
+        }
+    }
+
+    IEnumerator Flash()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            // Tắt hiển thị Renderer của đối tượng.
+            GetComponent<Renderer>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
+
+            // Bật hiển thị Renderer của đối tượng.
+            GetComponent<Renderer>().enabled = true;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

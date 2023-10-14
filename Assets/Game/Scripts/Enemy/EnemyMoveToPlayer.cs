@@ -32,27 +32,30 @@ public class EnemyMoveToPlayer : MonoBehaviour
     }
     private void Update()
     {
-        positionCurrent = transform.position;
-        Vector3 target = ManagerScript.Ins.player.transform.position - transform.position;
-        Quaternion newRotation = Quaternion.LookRotation(target);
-        transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, 0);
-        switch (currentState)
+        if (!enemy.isDieEnemy)
         {
-            case EnemyState.Move:
-                MoveToPlayer();
-                animator.SetBool(Constants.Enemy_Run_Ani, true);
-                animator.SetBool(Constants.Enemy_Attack_Ani, false);
-                break;
-            case EnemyState.Attack:
-                if (positionCurrent == transform.position)
-                {
-                    if (Time.time - timeStart >= enemy.data.speedFire)
+            positionCurrent = transform.position;
+            Vector3 target = ManagerScript.Ins.player.transform.position - transform.position;
+            Quaternion newRotation = Quaternion.LookRotation(target);
+            transform.rotation = Quaternion.Euler(0, newRotation.eulerAngles.y, 0);
+            switch (currentState)
+            {
+                case EnemyState.Move:
+                    MoveToPlayer();
+                    animator.SetBool(Constants.Enemy_Run_Ani, true);
+                    animator.SetBool(Constants.Enemy_Attack_Ani, false);
+                    break;
+                case EnemyState.Attack:
+                    if (positionCurrent == transform.position)
                     {
-                        animator.SetBool(Constants.Enemy_Run_Ani, false);
-                        Attack();
+                        if (Time.time - timeStart >= enemy.data.speedFire)
+                        {
+                            animator.SetBool(Constants.Enemy_Run_Ani, false);
+                            Attack();
+                        }
                     }
-                }
-                break;
+                    break;
+            }
         }
     }
 

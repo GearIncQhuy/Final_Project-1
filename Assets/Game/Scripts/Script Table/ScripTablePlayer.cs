@@ -22,4 +22,5 @@ public class ScripTablePlayer : ScriptableObject
 
     [Header("Coin")]
     public int coin;
+    public int diamon;
 }

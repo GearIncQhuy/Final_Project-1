@@ -48,7 +48,20 @@ public class Skill_1 : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1) && timeStart <= 4f)
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                CheckSkill();
+            }
+
+        if(checkUse == 2 && !startTime)
+        {
+            checkUse = 0;
+        }
+    }
+
+    private void CheckSkill()
+    {
+        if (player.checkPlayerLife && timeStart <= 4f)
         {
             if (checkUse == 0)
             {
@@ -56,16 +69,11 @@ public class Skill_1 : MonoBehaviour
                 UseSkill();
                 checkUse++;
             }
-            if(checkUse == 1 && timeReuse)
+            if (checkUse == 1 && timeReuse)
             {
                 timeReuse = false;
                 checkUse++;
             }
-        }
-
-        if(checkUse == 2 && !startTime)
-        {
-            checkUse = 0;
         }
     }
 
@@ -74,6 +82,7 @@ public class Skill_1 : MonoBehaviour
      */
     private void UseSkill()
     {
+        
         if (manaPlayer.UseMana(player.manaCurrent, 1, player.data.level))
         {
             InstanFireBall();

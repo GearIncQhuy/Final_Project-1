@@ -47,4 +47,9 @@ public class Constants : MonoBehaviour
     public const string BossMap1_Attack1 = "Bite Attack";
     public const string BossMap1_SpawnEnemy = "Cast Spell";
     public const string BossMap1_Die = "Die";
+
+
+    // - Tag UI
+    //   + End Game UI
+    public const string Tag_EndGameUI = "EndGameUI";
 }

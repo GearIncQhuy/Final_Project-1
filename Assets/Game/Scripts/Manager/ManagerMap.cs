@@ -12,7 +12,7 @@ public class ManagerMap : Singleton<ManagerMap>
     [SerializeField] private Transform Map3;
     [SerializeField] private ScriptTableGame data;
 
-    [SerializeField] private List<GameObject> ListMap = new List<GameObject>();
+    public List<GameObject> ListMap = new List<GameObject>();
     private int mapCurrent;
     private int mapNext;
 

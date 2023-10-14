@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DamageNumbersPro;
 
@@ -7,6 +6,8 @@ public class Enemy : MonoBehaviour
 {
     public ScripTableEnemy data;
     public GameObject sliderObj;
+    public bool isDieEnemy = false;
+    private Animator animator;
 
     // Thông số ban đầu
     public float heal;
@@ -26,8 +27,8 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
         Calculate();
-
         // Set Enemy Fly
         if(data.tag == Constants.EnemyFly)
         {
@@ -59,23 +60,10 @@ public class Enemy : MonoBehaviour
     private void FixedUpdate()
     {
         // Enemy die => reset poperties Enemy
-        if (heal == 0f)
+        if (heal <= 0f || isDieEnemy)
         {
-            ResetEnemy();
-
-            Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
-            numberPosition.y += 1.3f;
-            DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
-            damageNumber.SetScale(1.5f);
-            ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
-            // Random Coin
-            if (RandomCoin())
-            {
-                DamageNumber damage = coinUI.Spawn(numberPosition, 1);
-                damage.SetScale(1.5f);
-                ManagerScript.Ins.player.data.coin++;
-            }
-            ObjectPool.Ins.ReturnToPool(data.tag, this.gameObject);
+            isDieEnemy = true;
+            StartCoroutine(Die());
         }
 
         UpdatePoperties();
@@ -132,6 +120,7 @@ public class Enemy : MonoBehaviour
             levelPlayer = ManagerScript.Ins.player.data.level;
         }
         heal = data.healMax;
+        isDieEnemy = false;
     }
 
     /**
@@ -154,6 +143,47 @@ public class Enemy : MonoBehaviour
         else
         {
             return false;
+        }
+    }
+
+    IEnumerator Die()
+    {
+        if (isDieEnemy)
+        {
+            animator.SetBool(Constants.Enemy_Run_Ani, false);
+
+            if(data.category == EnemyCategory.Fly)
+            {
+                Vector3 newPosition = transform.position;
+                newPosition.y = ManagerScript.Ins.player.transform.position.y;
+                transform.position = newPosition;
+            }
+
+            animator.SetBool(Constants.Enemy_Die_Ani, true);
+            yield return new WaitForSeconds(1.5f);
+            animator.SetBool(Constants.Enemy_Run_Ani, false);
+            ResetEnemy();
+
+            Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
+            numberPosition.y += 1.3f;
+            DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
+            damageNumber.SetScale(1.5f);
+            ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
+            // Random Coin
+            if (RandomCoin())
+            {
+                DamageNumber damage = coinUI.Spawn(numberPosition, 1);
+                damage.SetScale(1.5f);
+                ManagerScript.Ins.player.data.coin++;
+            }
+            // Random Diamon
+            if(Random.Range(0f,100f) <= 2)
+            {
+                Vector3 diamonPosition = transform.position;
+                diamonPosition.y += 1.5f;
+                ObjectPool.Ins.SpawnFromPool(Constants.Diamon, diamonPosition, Quaternion.identity);
+            }
+            ObjectPool.Ins.ReturnToPool(data.tag, this.gameObject);
         }
     }
 }

@@ -6,6 +6,7 @@ public class Skill_3 : MonoBehaviour
 {
     private PlayerController player;
     private ManaPlayer manaPlayer;
+    
 
     [SerializeField] GameObject targetCircle;
     Vector3 transCircle;
@@ -17,6 +18,7 @@ public class Skill_3 : MonoBehaviour
     {
         player = gameObject.GetComponent<PlayerController>();
         manaPlayer = gameObject.GetComponent<ManaPlayer>();
+        
     }
 
     // Update is called once per frame
@@ -34,20 +36,31 @@ public class Skill_3 : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha3) && !startTime)
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            CheckSkill();
+        }
+    }
+
+    public void CheckSkill()
+    {
+        if (player.checkPlayerLife && !startTime)
         {
             if (manaPlayer.UseMana(player.manaCurrent, 3, player.data.level))
             {
                 UseSkill();
-                startTime = true;
+                //startTime = true;
             }
         }
     }
+
     /**
      * Tạo ra vòng tròn lửa để xác định vị trí rơi
      */
     private void UseSkill()
     {
+        
+        startTime = true;
         transCircle = transform.position;
         transCircle.y -= transform.position.y;
         GameObject circle = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill3, transCircle, Quaternion.identity);

@@ -15,6 +15,7 @@ TagManager:
   - PlayerSkill1_2
   - BulletEnemy
   - Boss
+  - Diamon
   layers:
   - Default
   - TransparentFX

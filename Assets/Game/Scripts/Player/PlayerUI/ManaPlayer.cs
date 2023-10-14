@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ManaPlayer : MonoBehaviour
 {
     public Slider manaSlider;
     private PlayerController player;
+    [SerializeField] private TextMeshProUGUI text;
     private void Start()
     {
         player = gameObject.GetComponent<PlayerController>();
@@ -28,6 +30,7 @@ public class ManaPlayer : MonoBehaviour
             float manaCurrent = (manaPlayer - manaNeed) / player.data.manaMax;
             manaSlider.value = manaCurrent;
             player.manaCurrent = manaPlayer - manaNeed;
+            text.text = player.manaCurrent + "/" + player.data.manaMax;
             return true;
         }
         return false;

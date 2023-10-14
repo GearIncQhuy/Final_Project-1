@@ -34,7 +34,10 @@ public class BoomSkill3 : MonoBehaviour
             {
                 enemyUI = enemy.GetComponent<EnemyUI>();
                 // Update lại máu enemy đấy
-                enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, enemyUI.enemy.heal);
+                if(enemyUI != null)
+                {
+                    enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, enemyUI.enemy.heal);
+                }
             }
         }
     }
