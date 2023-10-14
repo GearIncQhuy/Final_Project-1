@@ -200,7 +200,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.11304348
+  m_Value: 0.65
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -521,6 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0736a12829b3e41c9bd7b9d2897d514b, type: 2}
   sliderObj: {fileID: 3574001782709529285}
+  isDieEnemy: 0
   heal: 0
   dame: 0
   checkActive: 0

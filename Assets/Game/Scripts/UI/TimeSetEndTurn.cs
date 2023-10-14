@@ -22,7 +22,7 @@ public class TimeSetEndTurn : MonoBehaviour
                 int timeUI = timeEnd - timeSet;
                 time.text = timeUI.ToString();
             }
-            round.text = "Round: " + ManagerTimeSet.Ins.data.level.ToString();
+            round.text = "Round " + ManagerTimeSet.Ins.data.level.ToString();
         }
             
     }

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   tamdanh: 8
-  healMax: 5000000
-  dameMax: 1000
+  healMax: 100000
+  dameMax: 500
