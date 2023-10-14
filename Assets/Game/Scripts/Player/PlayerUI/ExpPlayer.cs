@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ExpPlayer : MonoBehaviour
 {
     [SerializeField] private Slider expSlider;
+    [SerializeField] private TextMeshProUGUI text;
     /**
      * 
      */
@@ -25,5 +27,6 @@ public class ExpPlayer : MonoBehaviour
         }
         float sliderExpValue = expCurrent / ManagerScript.Ins.player.data.expMax;
         expSlider.value = sliderExpValue;
+        text.text = expCurrent + "/" + ManagerScript.Ins.player.data.expMax;
     }
 }

@@ -39,12 +39,12 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         }
         if (checkSpawn && data.level < 20)
         {
-            level = data.level;  // 0
-            timeEndTurn = EndTurn(); // 20
-            timeStart += Time.deltaTime; // 0
-            if (timeSet >= EndTurn()) // 20 
+            level = data.level;  
+            timeEndTurn = EndTurn(); 
+            timeStart += Time.deltaTime; 
+            if (timeSet >= EndTurn()) 
             {
-                endTurn = true; // true
+                endTurn = true;
                 NextTurn();
             }
             if (timeStart >= 1f && !endTurn)

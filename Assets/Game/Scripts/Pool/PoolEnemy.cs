@@ -63,15 +63,21 @@ public class PoolEnemy : MonoBehaviour
             Clearreturn();
         }
 
-        if(ManagerTimeSet.Ins.data.level == 20 && ManagerTimeSet.Ins.checkSpawn)
+        if(ManagerTimeSet.Ins.data.level == 20 && ManagerTimeSet.Ins.checkSpawn && ManagerScript.Ins.player.checkPlayerLife)
         {
             switch (ManagerTimeSet.Ins.data.map)
             {
                 case 1:
-                    BossMap1.SetActive(true);
+                    StartCoroutine(spawnBossMap1());
                     break;
             }
         }
+    }
+
+    IEnumerator spawnBossMap1()
+    {
+        yield return new WaitForSeconds(1.5f);
+        BossMap1.SetActive(true);
     }
 
     public void Clearreturn()
@@ -82,7 +88,25 @@ public class PoolEnemy : MonoBehaviour
             if (enemy.activeInHierarchy)
             {
                 Enemy enemyData = enemy.GetComponent<Enemy>();
-                ObjectPool.Ins.ReturnToPool(enemyData.data.tag,enemy.gameObject);
+                if(enemyData != null)
+                {
+                    enemyData.isDieEnemy = true;
+                }
+                //ObjectPool.Ins.ReturnToPool(enemyData.data.tag,enemy.gameObject);
+            }
+        }
+        if(ManagerTimeSet.Ins.data.level == 20)
+        {
+            switch (ManagerTimeSet.Ins.data.map)
+            {
+                case 1:
+                    BossMap1 boss = BossMap1.GetComponent<BossMap1>();
+                    if(boss != null)
+                    {
+                        boss.ResetPoperties();
+                        BossMap1.SetActive(false);
+                    }
+                    break;
             }
         }
     }
@@ -97,10 +121,23 @@ public class PoolEnemy : MonoBehaviour
      */
     private Vector3 RandomPositionEnemy(float min, float max, string enemyCategory, Transform trans)
     {
-        float randomAngle = Random.Range(0f, 360f);
-        float randomDistance = Random.Range(min, max);
-        Vector3 randomPosition = trans.position + Quaternion.Euler(0, randomAngle, 0) * (Vector3.forward * randomDistance);
-        return randomPosition;
+        bool pool = true;
+        while (pool)
+        {
+            float randomAngle = Random.Range(0f, 360f);
+            float randomDistance = Random.Range(min, max);
+            Vector3 randomPosition = trans.position + Quaternion.Euler(0, randomAngle, 0) * (Vector3.forward * randomDistance);
+            if (ManagerMap.Ins.ListMap[0] != null)
+            {
+                Map map = ManagerMap.Ins.ListMap[0].GetComponent<Map>();
+                if (map.CheckPositonSpawn(randomPosition))
+                {
+                    pool = false;
+                    return randomPosition;
+                }
+            }
+        }
+        return Vector3.zero;
     }
 
     /**
@@ -116,6 +153,7 @@ public class PoolEnemy : MonoBehaviour
                 if (ManagerTimeSet.Ins.data.level > 0 && ManagerTimeSet.Ins.data.level <= 10)
                 {
                     return Constants.EnemyRun;
+                    //return Constants.EnemyFly;
                 }
                 else
                 {

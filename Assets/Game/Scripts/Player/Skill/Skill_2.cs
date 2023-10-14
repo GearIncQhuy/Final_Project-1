@@ -7,6 +7,7 @@ public class Skill_2 : MonoBehaviour
     private PlayerController player;
     [SerializeField] private GameObject circle;
     private ManaPlayer manaPlayer;
+    private Animator animator;
     private bool startTime;
     private float timeStart;
     private void Awake()
@@ -18,6 +19,7 @@ public class Skill_2 : MonoBehaviour
     {
         player = gameObject.GetComponent<PlayerController>();
         manaPlayer = player.GetComponent<ManaPlayer>();
+        animator = gameObject.GetComponent<Animator>();
     }
 
     private void Update()
@@ -38,20 +40,24 @@ public class Skill_2 : MonoBehaviour
         }
 
         //
-        if (Input.GetKeyDown(KeyCode.Alpha2) && timeStart == 0f)
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             UseSkill();
         }
     }
 
-    private void UseSkill()
+    public void UseSkill()
     {
-        if(manaPlayer.UseMana(player.manaCurrent, 2, player.data.level))
+        if (player.checkPlayerLife && timeStart == 0f)
         {
-            GameObject skill2 = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill2, transform.position, Quaternion.identity);
-            player.checkHeal = true;
-            player.DontMove = true;
-            startTime = true;
+            if (manaPlayer.UseMana(player.manaCurrent, 2, player.data.level))
+            {
+                animator.SetBool("isRun", false);
+                GameObject skill2 = ObjectPool.Ins.SpawnFromPool(Constants.Tag_Skill2, transform.position, Quaternion.identity);
+                player.checkHeal = true;
+                player.DontMove = true;
+                startTime = true;
+            }
         }
     }
 }

@@ -2,11 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    //
     public bool checkPlayerLife;
     public bool checkBatTu = false;
+
+    // status
+    [SerializeField] private TextMeshProUGUI textMana;
+    [SerializeField] private TextMeshProUGUI textHeal;
+    [SerializeField] private TextMeshProUGUI textExp;
+
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;
@@ -73,11 +81,18 @@ public class PlayerController : MonoBehaviour
         Calculate();
     }
 
+    public int endGame = 0;
     private void LateUpdate()
     {
         if(healCurrent <= 0)
         {
             checkPlayerLife = false;
+            // PreFab end Game
+            if(endGame == 0)
+            {
+                ObjectPool.Ins.SpawnFromPool(Constants.Tag_EndGameUI, transform.position, Quaternion.identity);
+                endGame++;
+            }
         }
     }
 
@@ -85,21 +100,24 @@ public class PlayerController : MonoBehaviour
     private float timeRetoreHeal = 0f;
     private void Update()
     {
-        timeRetoreMana += Time.deltaTime;
-        timeRetoreHeal += Time.deltaTime;
-        // Hồi mana theo giây
-        if (timeRetoreMana >= 1f)
+        if (checkPlayerLife)
         {
-            RestoreMana();
-            timeRetoreMana = 0f;
-        }
-        // Hồi heal theo giây
-        if (checkHeal)
-        {
-            if(timeRetoreHeal >= 1f)
+            timeRetoreMana += Time.deltaTime;
+            timeRetoreHeal += Time.deltaTime;
+            // Hồi mana theo giây
+            if (timeRetoreMana >= 1f)
             {
-                RestoreHeal();
-                timeRetoreHeal = 0f;
+                RestoreMana();
+                timeRetoreMana = 0f;
+            }
+            // Hồi heal theo giây
+            if (checkHeal)
+            {
+                if (timeRetoreHeal >= 1f)
+                {
+                    RestoreHeal();
+                    timeRetoreHeal = 0f;
+                }
             }
         }
     }
@@ -202,5 +220,11 @@ public class PlayerController : MonoBehaviour
         dame = data.dameMax + dameBonus;
         tamdanh = data.tamdanh + tamdanhBonus;
         speedCurrent = data.speed + speedBonus;
+
+        healSlider.value = 1;
+        manaSlider.value = 1;
+        textMana.text = manaCurrent + "/" + data.manaMax;
+        textHeal.text = healCurrent + "/" + data.healMax;
+        textExp.text = "0/" + data.expMax;
     }
 }
