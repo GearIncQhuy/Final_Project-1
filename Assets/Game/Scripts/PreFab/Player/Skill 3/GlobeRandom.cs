@@ -10,6 +10,7 @@ public class GlobeRandom : MonoBehaviour
         GlobeMove();
     }
 
+    #region Globe Move
     /**
      * Quả cầu rơi dần xuống
      */
@@ -29,4 +30,5 @@ public class GlobeRandom : MonoBehaviour
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill3_2, this.gameObject);
         }
     }
+    #endregion
 }

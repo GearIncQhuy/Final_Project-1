@@ -6,13 +6,16 @@ using TMPro;
 
 public class CardItem : MonoBehaviour
 {
+    #region Poperties
     [SerializeField] private Image icon;
     [SerializeField] private Image phase;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private NextLevel NextLevel;
+    #endregion
 
     private Card cardCurrent;
 
+    #region Set Card
     public void SetCard(Card card)
     {
         if(card != null)
@@ -23,6 +26,9 @@ public class CardItem : MonoBehaviour
             cardCurrent = card;
         }
     }
+    #endregion
+
+    #region Random Card
     public void RandomCard()
     {
         if (ManagerScript.Ins.player.data.coin > 0)
@@ -32,6 +38,9 @@ public class CardItem : MonoBehaviour
             CardManager.Ins.UpdateCoin();
         }
     }
+    #endregion
+
+    #region Poperties Text
     private string PopertiesText(Card card)
     {
         string textString = "";
@@ -57,21 +66,24 @@ public class CardItem : MonoBehaviour
         }
         return textString;
     }
+    #endregion
 
+    #region Button Click Card 
     public void ClickCard()
     {
         if(ManagerScript.Ins.player.data.coin >= cardCurrent.price)
         {
             ManagerScript.Ins.player.data.coin -= cardCurrent.price;
             cardCurrent.UpdateUse();
-            ManagerScript.Ins.player.healCurrent += cardCurrent.heal;
-            ManagerScript.Ins.player.dame += cardCurrent.dame;
-            ManagerScript.Ins.player.speedCurrent += cardCurrent.speed;
-            ManagerScript.Ins.player.tamdanh += cardCurrent.speedFire;
-            ManagerScript.Ins.player.manaCurrent += cardCurrent.mana;
-            ManagerScript.Ins.player.data.phases = cardCurrent.phases;
+            ManagerScript.Ins.player.healCurrent    += (int)cardCurrent.heal;
+            ManagerScript.Ins.player.dame           += (int)cardCurrent.dame;
+            ManagerScript.Ins.player.speedCurrent   += (int)cardCurrent.speed;
+            ManagerScript.Ins.player.tamdanh        += (int)cardCurrent.speedFire;
+            ManagerScript.Ins.player.manaCurrent    += (int)cardCurrent.mana;
+            ManagerScript.Ins.player.data.phases     = cardCurrent.phases;
             ManagerScript.Ins.player.Calculate();
             NextLevel.ClickNextLevel();
         }
     }
+    #endregion
 }

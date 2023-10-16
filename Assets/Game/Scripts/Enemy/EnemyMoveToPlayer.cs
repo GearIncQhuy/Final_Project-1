@@ -11,6 +11,7 @@ public enum EnemyState
 
 public class EnemyMoveToPlayer : MonoBehaviour
 {
+    #region Poperties Enemy
     private Enemy enemy;
     private Vector3 yPosition;
     private Vector3 positionCurrent;
@@ -19,6 +20,7 @@ public class EnemyMoveToPlayer : MonoBehaviour
     public EnemyState currentState;
     private Animator animator;
     private Rigidbody rb;
+    #endregion
 
     private void Start()
     {
@@ -59,6 +61,7 @@ public class EnemyMoveToPlayer : MonoBehaviour
         }
     }
 
+    #region Move State
     private void MoveToPlayer()
     {
         float distance = Vector3.Distance(ManagerScript.Ins.player.transform.position, transform.position);
@@ -80,7 +83,9 @@ public class EnemyMoveToPlayer : MonoBehaviour
             currentState = EnemyState.Attack;
         }
     }
+    #endregion
 
+    #region Attack State
     private float timeAttack = 2f;
     private void Attack()
     {
@@ -112,4 +117,5 @@ public class EnemyMoveToPlayer : MonoBehaviour
             currentState = EnemyState.Move;
         }
     }
+    #endregion
 }

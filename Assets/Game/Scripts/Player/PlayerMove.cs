@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    #region Poperties
     private PlayerController player;
     private Rigidbody rigid;
     [SerializeField] private FloatingJoystick joystick;
     private Animator animator;
+    #endregion
 
     //public float rotationSpeed;
     private void Awake()
@@ -23,6 +25,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     public float rotationSpeed;
+    #region Player Move Use PC, Laptop
     /**
      * Hàm di chuyển Player trên PC
      */
@@ -56,7 +59,9 @@ public class PlayerMove : MonoBehaviour
     //        transform.Translate(movement * player.data.speed * Time.deltaTime, Space.World);
     //    }
     //}
+    #endregion
 
+    #region Player Move Use Phone
     /**
      * Hàm di chuyển theo joystick
      */
@@ -85,4 +90,5 @@ public class PlayerMove : MonoBehaviour
             rigid.MovePosition(rigid.position + _movement);
         }
     }
+    #endregion
 }

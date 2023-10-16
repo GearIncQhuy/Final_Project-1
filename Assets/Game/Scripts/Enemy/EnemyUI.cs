@@ -6,16 +6,20 @@ using DamageNumbersPro;
 
 public class EnemyUI : MonoBehaviour
 {
+    #region Poperties
     public DamageNumber dameUI;
 
     public Enemy enemy;
     
     public Slider slider;
+    #endregion
 
     private void Start()
     {
         enemy = gameObject.GetComponent<Enemy>();
     }
+
+    #region Update Heal Enemy 
     /**
      * Hàm update lại thanh máu cho Enemy
      * @param: healCurrentEnemy : máu hiện tại của Enemy
@@ -46,4 +50,5 @@ public class EnemyUI : MonoBehaviour
         enemy.checkActive = true;
         enemy.sliderObj.SetActive(true);
     }
+    #endregion
 }

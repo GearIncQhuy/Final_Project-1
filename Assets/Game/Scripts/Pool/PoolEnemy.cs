@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PoolEnemy : MonoBehaviour
 {
+    #region Poperties Default
     [SerializeField] private Transform player;
     [SerializeField] private GameObject BossMap1;
 
@@ -12,10 +13,11 @@ public class PoolEnemy : MonoBehaviour
 
     private float timeDelay;
     private float timeStart;
+    #endregion
 
     private void Start()
     {
-        enemyDefault = 10;
+        enemyDefault = 2;
     }
 
     // Update is called once per frame
@@ -55,7 +57,6 @@ public class PoolEnemy : MonoBehaviour
         // Kiểm tra hết turn chưa clear quái trên map
         if (ManagerTimeSet.Ins.endTurn)
         {
-            Clearreturn();
             ManagerTimeSet.Ins.endTurn = false;
         }
         if (!ManagerTimeSet.Ins.checkSpawn)
@@ -74,12 +75,15 @@ public class PoolEnemy : MonoBehaviour
         }
     }
 
+    #region Spawn Boss Map 1
     IEnumerator spawnBossMap1()
     {
         yield return new WaitForSeconds(1.5f);
         BossMap1.SetActive(true);
     }
+    #endregion
 
+    #region Clear Enemy End Ware
     public void Clearreturn()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag(Constants.Tag_Enemy);
@@ -92,7 +96,6 @@ public class PoolEnemy : MonoBehaviour
                 {
                     enemyData.isDieEnemy = true;
                 }
-                //ObjectPool.Ins.ReturnToPool(enemyData.data.tag,enemy.gameObject);
             }
         }
         if(ManagerTimeSet.Ins.data.level == 20)
@@ -109,13 +112,22 @@ public class PoolEnemy : MonoBehaviour
                     break;
             }
         }
+        GameObject[] bullets = GameObject.FindGameObjectsWithTag(Constants.Tag_BulletEnemy);
+        foreach(GameObject bullet in bullets)
+        {
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet_Enemy, bullet);
+        }
     }
+    #endregion
 
+    #region Number Max Enemies In SubWare
     public int NumberOfEnemies()
     {
         return ManagerTimeSet.Ins.level * ManagerTimeSet.Ins.turn * enemyDefault;
     }
+    #endregion
 
+    #region Random Position Enemy In Map
     /**
      * Random vị trí Enemy -> trong khoảng từ 20 -> 30f so với Player
      */
@@ -139,7 +151,9 @@ public class PoolEnemy : MonoBehaviour
         }
         return Vector3.zero;
     }
+    #endregion
 
+    #region Random Category Enemy
     /**
      * Random enemy
      */
@@ -174,11 +188,14 @@ public class PoolEnemy : MonoBehaviour
                 return Constants.EnemyRun;
         }
     }
+    #endregion
 
+    #region Spawn Enemy
     public void SpawnEnemy(Transform trans)
     {
         string enemyCateggory = RandomEnemy();
         GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(10, 15f, enemyCateggory, trans), Quaternion.identity);
         ObjectPool.Ins.enemyList.Add(enemy);
     }
+    #endregion
 }

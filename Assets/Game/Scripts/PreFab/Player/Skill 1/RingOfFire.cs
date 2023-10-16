@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class RingOfFire : MonoBehaviour
 {
-    private ManagerScript manager;
+    #region Poperties
     private float time;
+    #endregion
+
     private void Start()
     {
-        manager = ManagerScript.Ins;
         time = 0f;
     }
 
@@ -22,6 +23,7 @@ public class RingOfFire : MonoBehaviour
             time = 0f;
         }
     }
+
     private void FixedUpdate()
     {
         if (checkEnd)
@@ -30,6 +32,7 @@ public class RingOfFire : MonoBehaviour
         }
     }
 
+    #region Select Enemy In Distans
     private EnemyUI enemyUI;
     private void SelecEnemy()
     {
@@ -40,10 +43,11 @@ public class RingOfFire : MonoBehaviour
             {
                 enemyUI = enemy.GetComponent<EnemyUI>();
                 // Update lại máu enemy đấy
-                enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, manager.player.GetDamePlayer(1, manager.player.data.level, false));
+                enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, ManagerScript.Ins.player.GetDamePlayer(1, ManagerScript.Ins.player.data.level, false));
 
                 checkEnd = false;
             }
         }
     }
+    #endregion
 }

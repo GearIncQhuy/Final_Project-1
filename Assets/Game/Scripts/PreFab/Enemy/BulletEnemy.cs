@@ -16,6 +16,7 @@ public class BulletEnemy : MonoBehaviour
         }
     }
 
+    #region Trigger 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(Constants.Tag_Player))
@@ -26,5 +27,11 @@ public class BulletEnemy : MonoBehaviour
             }
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet_Enemy, this.gameObject);
         }
+
+        if (other.gameObject.CompareTag(Constants.Tag_Map))
+        {
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet_Enemy, this.gameObject);
+        }
     }
+    #endregion
 }

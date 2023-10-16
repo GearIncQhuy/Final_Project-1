@@ -5,6 +5,7 @@ using TMPro;
 
 public class CheatGame : MonoBehaviour
 {
+    #region Poperties
     [SerializeField] private GameObject status;
 
     [SerializeField] private TextMeshProUGUI levelPlayer;
@@ -15,7 +16,7 @@ public class CheatGame : MonoBehaviour
     [SerializeField] private PoolEnemy poolEnemy;
     private ManagerScript manager;
     private ManagerTimeSet timeSet;
-    
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class CheatGame : MonoBehaviour
         }
     }
 
+    #region Click Cheat
     public void ClickCheat()
     {
         
@@ -48,7 +50,9 @@ public class CheatGame : MonoBehaviour
         subware.text = timeSet.turn.ToString();
         enemySpawn.text = poolEnemy.enemyMax.ToString();
     }
+    #endregion
 
+    #region Click Level
     public void ClickLevel()
     {
         ManagerTimeSet.Ins.data.level += 1;
@@ -57,9 +61,12 @@ public class CheatGame : MonoBehaviour
             ManagerTimeSet.Ins.data.level = 1;
         }
     }
+    #endregion
 
+    #region Click Level Player
     public void ClickLevelPlayer()
     {
         ManagerScript.Ins.player.uplevel.UpLevel();
     }
+    #endregion
 }

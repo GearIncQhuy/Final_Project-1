@@ -2,20 +2,39 @@ using System.Collections;
 using UnityEngine;
 using DamageNumbersPro;
 
+/**
+ * Định nghĩa loại Enemy
+ */
+public enum EnemyCategory
+{
+    Fly,
+    Run,
+    BOSS
+}
 public class Enemy : MonoBehaviour
 {
-    public ScripTableEnemy data;
-    public GameObject sliderObj;
-    public bool isDieEnemy = false;
+    #region Poperties
     private Animator animator;
 
-    // Thông số ban đầu
+    #region Poperties Current Enemy
+    public ScripTableEnemy data;
+    public bool isDieEnemy = false;
     public float heal;
     public float dame;
+    #endregion
 
-    // Quản lý cho thanh máu bật tắt
+    #region Silder
+    public GameObject sliderObj;
     public bool checkActive;
     private float timeActive;
+    #endregion
+
+    #region DamegeNumber
+    public DamageNumber expUIPlayer;
+    public DamageNumber coinUI;
+    #endregion
+
+    #endregion
 
     private void Awake()
     {
@@ -38,6 +57,9 @@ public class Enemy : MonoBehaviour
                 data.tamdanh = 20;
             }
         }
+        data.healMax = 1000 + 250 * ManagerTimeSet.Ins.level;
+        data.dameMax = 100 + 25 * ManagerTimeSet.Ins.level;
+        data.expEnemy = 100 + 25 * ManagerTimeSet.Ins.level;
     }
 
     private void Update()
@@ -55,20 +77,18 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public DamageNumber expUIPlayer;
-    public DamageNumber coinUI;
     private void FixedUpdate()
     {
         // Enemy die => reset poperties Enemy
         if (heal <= 0f || isDieEnemy)
         {
             isDieEnemy = true;
+            ObjectPool.Ins.enemyList.Remove(gameObject);
             StartCoroutine(Die());
         }
-
-        UpdatePoperties();
     }
 
+    #region Calculate DameCurrent Enemy
     /**
      * Hàm Calculate tính dame có thể gây ra cho Player
      * note: tương sinh với Player thì dame giảm đi 10%, 
@@ -100,7 +120,9 @@ public class Enemy : MonoBehaviour
             dame = data.dameMax;
         }
     }
+    #endregion
 
+    #region Reset Poperties Enemy
     /**
      * Hàm reset lại máu cho enemy để trả lại Pool và nếu Player có tăng level thì quái bay sẽ tăng tầm đánh
      */
@@ -122,17 +144,9 @@ public class Enemy : MonoBehaviour
         heal = data.healMax;
         isDieEnemy = false;
     }
+    #endregion
 
-    /**
-     * Up level Enemy -> +  ware
-     */
-    private void UpdatePoperties()
-    {
-        data.healMax = 1000 + 250 * ManagerTimeSet.Ins.level;
-        data.dameMax = 100 + 25 * ManagerTimeSet.Ins.level;
-        data.expEnemy = 100 + 25 * ManagerTimeSet.Ins.level;
-    }
-
+    #region RandomCoin and Diamon
     private bool RandomCoin()
     {
         float number = Random.Range(0f, 100f);
@@ -145,7 +159,9 @@ public class Enemy : MonoBehaviour
             return false;
         }
     }
+    #endregion
 
+    #region Die state
     IEnumerator Die()
     {
         if (isDieEnemy)
@@ -164,36 +180,31 @@ public class Enemy : MonoBehaviour
             animator.SetBool(Constants.Enemy_Run_Ani, false);
             ResetEnemy();
 
-            Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
-            numberPosition.y += 1.3f;
-            DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
-            damageNumber.SetScale(1.5f);
-            ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
-            // Random Coin
-            if (RandomCoin())
+            if (ManagerScript.Ins.player.checkPlayerLife)
             {
-                DamageNumber damage = coinUI.Spawn(numberPosition, 1);
-                damage.SetScale(1.5f);
-                ManagerScript.Ins.player.data.coin++;
+                Vector3 numberPosition = ManagerScript.Ins.player.transform.position;
+                numberPosition.y += 1.3f;
+                DamageNumber damageNumber = expUIPlayer.Spawn(numberPosition, data.expEnemy);
+                damageNumber.SetScale(1.5f);
+                ManagerScript.Ins.expPlayer.UpdateExpPlayerCurrent(data.expEnemy);
+                // Random Coin
+                if (RandomCoin())
+                {
+                    DamageNumber damage = coinUI.Spawn(numberPosition, 1);
+                    damage.SetScale(1.5f);
+                    ManagerScript.Ins.player.data.coin++;
+                }
+                // Random Diamon
+                if (Random.Range(0f, 100f) <= 2)
+                {
+                    Vector3 diamonPosition = transform.position;
+                    diamonPosition.y += 1.5f;
+                    ObjectPool.Ins.SpawnFromPool(Constants.Diamon, diamonPosition, Quaternion.identity);
+                }
             }
-            // Random Diamon
-            if(Random.Range(0f,100f) <= 2)
-            {
-                Vector3 diamonPosition = transform.position;
-                diamonPosition.y += 1.5f;
-                ObjectPool.Ins.SpawnFromPool(Constants.Diamon, diamonPosition, Quaternion.identity);
-            }
+            
             ObjectPool.Ins.ReturnToPool(data.tag, this.gameObject);
         }
     }
-}
-
-/**
- * Định nghĩa loại Enemy
- */
-public enum EnemyCategory
-{
-    Fly,
-    Run,
-    BOSS
+    #endregion
 }

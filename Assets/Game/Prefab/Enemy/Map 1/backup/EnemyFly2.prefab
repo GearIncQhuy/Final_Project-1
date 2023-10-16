@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2924825272369868673
 RectTransform:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.65
+  m_Value: 0.2090909
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -520,10 +520,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 0736a12829b3e41c9bd7b9d2897d514b, type: 2}
-  sliderObj: {fileID: 3574001782709529285}
   isDieEnemy: 0
   heal: 0
   dame: 0
+  sliderObj: {fileID: 3574001782709529285}
   checkActive: 0
   expUIPlayer: {fileID: 3103329958819751973, guid: 221549557e52d435e919cbe4ef9f7813, type: 3}
   coinUI: {fileID: 6035695026554729217, guid: a039aa1fa24e845d28e2bdaadc3fb3af, type: 3}

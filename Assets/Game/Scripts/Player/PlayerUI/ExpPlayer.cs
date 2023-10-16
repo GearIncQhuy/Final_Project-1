@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ExpPlayer : MonoBehaviour
 {
-    [SerializeField] private Slider expSlider;
-    [SerializeField] private TextMeshProUGUI text;
+    #region Update Exp Player Current
+    [SerializeField] private Image expSlider;
     /**
      * 
      */
@@ -26,7 +23,7 @@ public class ExpPlayer : MonoBehaviour
             ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);
         }
         float sliderExpValue = expCurrent / ManagerScript.Ins.player.data.expMax;
-        expSlider.value = sliderExpValue;
-        text.text = expCurrent + "/" + ManagerScript.Ins.player.data.expMax;
+        expSlider.fillAmount = sliderExpValue;
     }
+    #endregion
 }

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EndGame : MonoBehaviour
 {
+    #region Reset Poperties Player
     private void ResetPoperties()
     {
         ManagerScript.Ins.poolEnemy.Clearreturn();
@@ -11,24 +13,27 @@ public class EndGame : MonoBehaviour
         ManagerScript.Ins.player.endGame = 0;
         ManagerScript.Ins.player.UpdatePopertiesPlayer();
     }
+    #endregion
+
+    #region Button Play Again
     public void PlayAgain()
     {
-        
-        ManagerTimeSet.Ins.turn = 1;
-        ManagerTimeSet.Ins.timeSet = 0;
-        //ManagerTimeSet.Ins.data.level = 1;
-        ResetPoperties();
+        ManagerScript.Ins.poolEnemy.Clearreturn();
+        SceneManager.LoadScene(Constants.Scene_GamePlay);
         ObjectPool.Ins.ReturnToPool(Constants.Tag_EndGameUI, this.gameObject);
     }
+    #endregion
+
+    #region Button New Game
     public void NewGame()
     {
-        
-        ManagerTimeSet.Ins.turn = 1;
+        ManagerScript.Ins.poolEnemy.Clearreturn();
         ManagerTimeSet.Ins.timeSet = 0;
-        ResetPoperties();
-        ManagerTimeSet.Ins.data.level = 1;
-        ObjectPool.Ins.ReturnToPool(Constants.Tag_EndGameUI, this.gameObject);
+        StartCoroutine(ResetGame());
     }
+    #endregion
+
+    #region Button Revival
     public void HoiSinh()
     {
         //ResetPoperties();
@@ -39,4 +44,16 @@ public class EndGame : MonoBehaviour
             ObjectPool.Ins.ReturnToPool(Constants.Tag_EndGameUI, this.gameObject);
         }
     }
+    #endregion
+
+    #region Reset Game
+    IEnumerator ResetGame()
+    {
+        yield return new WaitForSeconds(2f);
+        ManagerScript.Ins.player.UpdatePopertiesPlayer();
+        ManagerTimeSet.Ins.data.level = 1;
+        SceneManager.LoadScene(Constants.Scene_GamePlay);
+        ObjectPool.Ins.ReturnToPool(Constants.Tag_EndGameUI, this.gameObject);
+    }
+    #endregion
 }

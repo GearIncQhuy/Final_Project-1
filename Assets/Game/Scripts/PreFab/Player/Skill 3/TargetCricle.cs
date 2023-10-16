@@ -36,6 +36,7 @@ public class TargetCricle : MonoBehaviour
         }
     }
 
+    #region Radom Position
     /**
      * Random vị trí rơi của Quả cầu
      */
@@ -48,4 +49,5 @@ public class TargetCricle : MonoBehaviour
         position.y += 60f;
         return position;
     }
+    #endregion
 }

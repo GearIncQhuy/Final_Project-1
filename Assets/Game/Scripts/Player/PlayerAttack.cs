@@ -5,9 +5,11 @@ using UnityEngine.SocialPlatforms;
 
 public class PlayerAttack : MonoBehaviour
 {
+    #region Poperties
     private PlayerController player;
     public Transform transformBullet;
     private float timeStart = 0f;
+    #endregion
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
+    #region Check Enemy In Distan Player
     /**
      * Hàm Check xem 10f xung quanh có Enemy không (dựa vào Tag và so sánh position) bắn vào Enemy gần nhất
      */
@@ -70,4 +73,5 @@ public class PlayerAttack : MonoBehaviour
             }
         }
     }
+    #endregion
 }
