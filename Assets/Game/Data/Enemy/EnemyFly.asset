@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnemyFly
   m_EditorClassIdentifier: 
   speed: 5
-  tamdanh: 15
+  tamdanh: 13
   speedFire: 3
-  dameMax: 150
-  healMax: 1500
+  dameMax: 125
+  healMax: 2000
   expEnemy: 125
   phases: 1
   category: 0
