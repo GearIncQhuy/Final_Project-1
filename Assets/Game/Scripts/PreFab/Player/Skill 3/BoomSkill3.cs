@@ -15,17 +15,18 @@ public class BoomSkill3 : MonoBehaviour
         time += Time.deltaTime;
         if(time >= 0.2f)
         {
-            SelecEnemy();
+            SelectEnemy();
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill3_3, this.gameObject);
             time = 0f;
         }
     }
 
+    #region Select Enemy In Distan
     /**
      * Tìm kiến enemy trong vùng ảnh hưởng
      */
     private EnemyUI enemyUI;
-    private void SelecEnemy()
+    private void SelectEnemy()
     {
         foreach (GameObject enemy in ObjectPool.Ins.enemyList)
         {
@@ -41,4 +42,5 @@ public class BoomSkill3 : MonoBehaviour
             }
         }
     }
+    #endregion
 }

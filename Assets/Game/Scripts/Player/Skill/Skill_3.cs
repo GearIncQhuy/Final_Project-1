@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Skill_3 : MonoBehaviour
 {
+    #region Poperties
     private PlayerController player;
     private ManaPlayer manaPlayer;
     
@@ -13,6 +14,8 @@ public class Skill_3 : MonoBehaviour
 
     private float timeStart;
     private bool startTime;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,7 @@ public class Skill_3 : MonoBehaviour
         }
     }
 
+    #region Button Skill 3
     public void CheckSkill()
     {
         if (player.checkPlayerLife && !startTime)
@@ -53,7 +57,9 @@ public class Skill_3 : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Use Skill
     /**
      * Tạo ra vòng tròn lửa để xác định vị trí rơi
      */
@@ -67,4 +73,5 @@ public class Skill_3 : MonoBehaviour
         //player.DontMove = true;
 
     }
+    #endregion
 }

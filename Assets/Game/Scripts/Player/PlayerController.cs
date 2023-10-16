@@ -6,38 +6,37 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    //
+    #region Check Player Life
     public bool checkPlayerLife;
     public bool checkBatTu = false;
+    #endregion
 
-    // status
-    [SerializeField] private TextMeshProUGUI textMana;
-    [SerializeField] private TextMeshProUGUI textHeal;
-    [SerializeField] private TextMeshProUGUI textExp;
+    #region Slider 
+    // Get Slider Canvas
+    [SerializeField] private Slider manaSlider;
+    [SerializeField] private Slider healSlider;
+    #endregion
 
+    #region Poperties Player Default
     // get data poperties
     public ScripTablePlayer data;
     public ManagerScript manager;
     public UpLevelPlayer uplevel;
     public Rigidbody rigid;
 
-    // Get Slider Canvas
-    [SerializeField] private Slider manaSlider;
-    [SerializeField] private Slider healSlider;
-
     // Poperties current
-    public float manaCurrent;
-    public float healCurrent;
-    public float dame;
-    public float tamdanh;
-    public float speedCurrent;
+    public int manaCurrent;
+    public int healCurrent;
+    public int dame;
+    public int tamdanh;
+    public int speedCurrent;
     //
     [SerializeField] private List<ScriptTableCard> listCards = new List<ScriptTableCard>();
-    private float manaBonus;
-    private float healBonus;
-    private float dameBonus;
-    private float tamdanhBonus;
-    private float speedBonus;
+    private int manaBonus;
+    private int healBonus;
+    private int dameBonus;
+    private int tamdanhBonus;
+    private int speedBonus;
 
     // check move
     public bool checkMove;
@@ -47,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     // check don't move
     public bool DontMove;
+    #endregion
 
     private void Awake()
     {
@@ -122,6 +122,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #region Calculate Dame Player
     /**
      * Check xem Player đang dùng vũ khí tương sinh với mình không
      * Nếu tương sinh -> dame tăng 10% (vũ khí tương sinh)
@@ -132,20 +133,22 @@ public class PlayerController : MonoBehaviour
     {
         // Trường hợp 1: Vũ khí tương sinh
         if(manager.nourishmentRestraintFuction.checkMutualNourishment(manager.bullet.data.phases, data.phases)){
-            dame = data.dameMax + (manager.bullet.data.baseDame * 1.1f);
+            dame = (int)(data.dameMax + (manager.bullet.data.baseDame * 1.1f));
         }
         // Trường hợp 2: Vũ khí tương khắc
         else if(manager.nourishmentRestraintFuction.checkMutualRestraint(manager.bullet.data.phases, data.phases))
         {
-            dame = data.dameMax + (manager.bullet.data.baseDame * 0.9f);
+            dame = (int)(data.dameMax + (manager.bullet.data.baseDame * 0.9f));
         }
         // Trường hợp 3: Vũ khí không tương sinh cũng không tương khắc
         else
         {
-            dame = data.dameMax + manager.bullet.data.baseDame;
+            dame = (int)(data.dameMax + manager.bullet.data.baseDame);
         }
     }
+    #endregion
 
+    #region Gizmos Test
     /**
      */
     private void OnDrawGizmos()
@@ -154,7 +157,9 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 10f);
         Gizmos.DrawRay(transform.position, transform.forward * 10f); 
     }
+    #endregion
 
+    #region Get Dame Player
     /**
      * Hàm tính dame cho Player sử dụng
      */
@@ -175,44 +180,50 @@ public class PlayerController : MonoBehaviour
         }
         return 0;
     }
+    #endregion
 
+    #region Restore Mana Player (1%/s)
     /**
      * Hàm hồi lại mana mỗi giây
      */
     private void RestoreMana()
     {
-        manaCurrent += (data.manaMax * 0.01f);
+        manaCurrent += (int)(data.manaMax * 0.01f);
         if (manaCurrent > data.manaMax)
         {
             manaCurrent = data.manaMax;
         }
         manaSlider.value = manaCurrent / data.manaMax;
     }
+    #endregion
 
+    #region Retore Heal Player (5%/s)
     /**
      * 
      */
     private void RestoreHeal()
     {
-        healCurrent += (data.healMax * 0.05f);
+        healCurrent += (int)(data.healMax * 0.05f);
         if(healCurrent > data.healMax)
         {
             healCurrent = data.healMax;
         }
         healSlider.value = healCurrent / data.healMax;
     }
+    #endregion
 
+    #region Update Poperties Player 
     public void UpdatePopertiesPlayer()
     {
         if (listCards.Count > 0)
         {
             for (int i = 0; i < listCards.Count; i++)
             {
-                dameBonus += listCards[i].dame * listCards[i].checkUse;
-                manaBonus += listCards[i].mana * listCards[i].checkUse;
-                healBonus += listCards[i].heal * listCards[i].checkUse;
-                speedBonus += listCards[i].speed * listCards[i].checkUse;
-                tamdanhBonus += listCards[i].speedFire * listCards[i].checkUse;
+                dameBonus += (int)(listCards[i].dame * listCards[i].checkUse);
+                manaBonus += (int)(listCards[i].mana * listCards[i].checkUse);
+                healBonus += (int)(listCards[i].heal * listCards[i].checkUse);
+                speedBonus += (int)(listCards[i].speed * listCards[i].checkUse);
+                tamdanhBonus += (int)(listCards[i].speedFire * listCards[i].checkUse);
             }
         }
         manaCurrent = data.manaMax + manaBonus;
@@ -223,8 +234,6 @@ public class PlayerController : MonoBehaviour
 
         healSlider.value = 1;
         manaSlider.value = 1;
-        textMana.text = manaCurrent + "/" + data.manaMax;
-        textHeal.text = healCurrent + "/" + data.healMax;
-        textExp.text = "0/" + data.expMax;
     }
+    #endregion
 }

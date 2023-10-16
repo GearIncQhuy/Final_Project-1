@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ManaPlayer : MonoBehaviour
 {
+    #region Poperties Default 
     public Slider manaSlider;
     private PlayerController player;
-    [SerializeField] private TextMeshProUGUI text;
+    #endregion
+
     private void Start()
     {
         player = gameObject.GetComponent<PlayerController>();
     }
 
+    #region Use Mana 
     /**
      * Hàm sử dụng mana (kiểm tra và thực hiện trừ mana khi sử dụng chiêu thức)
      * @param: manaPlayer lượng mana hiện tại của Player
@@ -29,13 +29,14 @@ public class ManaPlayer : MonoBehaviour
         {
             float manaCurrent = (manaPlayer - manaNeed) / player.data.manaMax;
             manaSlider.value = manaCurrent;
-            player.manaCurrent = manaPlayer - manaNeed;
-            text.text = player.manaCurrent + "/" + player.data.manaMax;
+            player.manaCurrent = (int)(manaPlayer - manaNeed);
             return true;
         }
         return false;
     }
+    #endregion
 
+    #region Calculate Mana Skill 
     /**
      * Hàm tính toán mana sử dụng
      * @param: level : level hiện tại của Player
@@ -53,4 +54,5 @@ public class ManaPlayer : MonoBehaviour
         manaBase -= level;
         return manaBase;
     }
+    #endregion
 }

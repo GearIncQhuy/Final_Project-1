@@ -5,8 +5,12 @@ using DamageNumbersPro;
 
 public class ManagerTimeSet : Singleton<ManagerTimeSet>
 {
+    #region PreFab scene
     [SerializeField] private GameObject sceneNextLevel;
     [SerializeField] private GameObject sceneLevelAgain;
+    #endregion
+
+    #region Poperties
     public ScriptTableGame data;
 
     public float timeEndTurn;
@@ -19,6 +23,7 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
     public int turn;
 
     public bool checkSpawn;
+    #endregion
 
     private void Start()
     {
@@ -28,43 +33,44 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
 
     private void Update()
     {
-        if (timeSet >= 0f)
+        if (ManagerScript.Ins.player.checkPlayerLife)
         {
-            if (turn > 3)
+            if (timeSet >= 0f)
             {
-                endTurn = true;
-                NextLevel();
-                endTurn = false;
+                if (turn > 3)
+                {
+                    endTurn = true;
+                    NextLevel();
+                    endTurn = false;
+                }
             }
-        }
-        if (checkSpawn && data.level < 20)
-        {
-            level = data.level;  
-            timeEndTurn = EndTurn(); 
-            timeStart += Time.deltaTime; 
-            if (timeSet >= EndTurn()) 
+            if (checkSpawn && data.level < 20)
             {
-                endTurn = true;
-                NextTurn();
-            }
-            if (timeStart >= 1f && !endTurn)
-            {
-                timeSet++;
-                timeStart = 0f;
+                level = data.level;
+                timeEndTurn = EndTurn();
+                timeStart += Time.deltaTime;
+                if (timeSet >= EndTurn())
+                {
+                    endTurn = true;
+                    NextTurn();
+                }
+                if (timeStart >= 1f && !endTurn)
+                {
+                    timeSet++;
+                    timeStart = 0f;
+                }
             }
         }
     }
 
-    // End Turn (sub ware)
+    #region Time End Turn
     private float EndTurn()
     {
-        float timeTurnDefault = 40f;
-        float timeAddTurn = turn * 5;
-        float timeAddLevel = level * 5;
-        return timeTurnDefault + timeAddTurn + timeAddLevel;
-        //return 15f;
+        return 10f;
     }
+    #endregion
 
+    #region Next Turn
     [SerializeField] private DamageNumber nextTurn;
     // Next Turn
     private void NextTurn()
@@ -85,7 +91,9 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         ManagerScript.Ins.player.healCurrent = ManagerScript.Ins.player.data.healMax;
         ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);
     }
+    #endregion
 
+    #region Next Level
     // Next Level
     public void NextLevel()
     {
@@ -110,4 +118,5 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         ManagerScript.Ins.player.healCurrent = ManagerScript.Ins.player.data.healMax;
         ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);
     }
+    #endregion
 }

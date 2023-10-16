@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class FireBall : MonoBehaviour
 {
-    private ManagerScript manager;
+    #region Poperties
     [SerializeField] private GameObject ringOfFire;
     
     private Skill_1 skill;
 
     private float time;
+    #endregion
 
     private void Start()
     {
-        manager = ManagerScript.Ins;
-        skill = manager.player.GetComponent<Skill_1>();
+        skill = ManagerScript.Ins.player.GetComponent<Skill_1>();
 
         time = 0f;
     }
@@ -35,11 +35,13 @@ public class FireBall : MonoBehaviour
         }
     }
 
+    #region Trigger
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag(Constants.Tag_Enemy))
         {
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Skill1, this.gameObject);
         }
     }
+    #endregion
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Skill_1 : MonoBehaviour
 {
+    #region Poperties
     [SerializeField] private Transform hard;
     private PlayerController player;
     private ManaPlayer manaPlayer;
@@ -13,6 +14,7 @@ public class Skill_1 : MonoBehaviour
     private float timeStart;
     private bool timeReuse;
     private bool startTime;
+    #endregion
 
     private void Awake()
     {
@@ -59,7 +61,8 @@ public class Skill_1 : MonoBehaviour
         }
     }
 
-    private void CheckSkill()
+    #region Button Skill 1 
+    public void CheckSkill()
     {
         if (player.checkPlayerLife && timeStart <= 4f)
         {
@@ -76,7 +79,9 @@ public class Skill_1 : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Use Skill 1
     /**
      * Sử dụng chiêu ở lần bắn thứ nhất
      */
@@ -88,7 +93,9 @@ public class Skill_1 : MonoBehaviour
             InstanFireBall();
         }
     }
+    #endregion
 
+    #region Instan Fire Ball
     /**
      * Hàm sinh ra Cầu lửa
      */
@@ -99,7 +106,8 @@ public class Skill_1 : MonoBehaviour
         Rigidbody rb = fireBall.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = hard.transform.forward * 20f;
+            rb.velocity = hard.transform.forward * 15f;
         }
     }
+    #endregion
 }

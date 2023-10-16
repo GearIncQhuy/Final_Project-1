@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ManagerMap : Singleton<ManagerMap>
 {
+    #region Poperties Map And Transform Map
     [SerializeField] private GameObject PreFab_Map1;
     [SerializeField] private GameObject PreFab_Map2;
     [SerializeField] private GameObject PreFab_Map3;
@@ -11,16 +12,20 @@ public class ManagerMap : Singleton<ManagerMap>
     [SerializeField] private Transform Map2;
     [SerializeField] private Transform Map3;
     [SerializeField] private ScriptTableGame data;
+    #endregion
 
+    #region Poperties
     public List<GameObject> ListMap = new List<GameObject>();
     private int mapCurrent;
     private int mapNext;
+    #endregion
 
     private void Start()
     {
         mapCurrent = data.map;
     }
 
+    #region Next Map
     public void NextMap()
     {
         mapNext = mapCurrent + 1;
@@ -43,7 +48,9 @@ public class ManagerMap : Singleton<ManagerMap>
 
         // map > 3
     }
+    #endregion
 
+    #region Create Map
     private void CreateMap(GameObject PreFab_map, Transform MapPosition)
     {
         if(PreFab_map != null)
@@ -55,4 +62,5 @@ public class ManagerMap : Singleton<ManagerMap>
             data.map++;
         }
     }
+    #endregion
 }

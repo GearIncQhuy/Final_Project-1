@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class EnemyTrigger : MonoBehaviour
 {
+    #region Poperties
     private Enemy enemy;
     private EnemyUI enemyUI;
+    #endregion
+
     private void Start()
     {
         enemyUI = gameObject.GetComponent<EnemyUI>();
         enemy = gameObject.GetComponent<Enemy>();
     }
 
+    #region Trigger
     private void OnTriggerEnter(Collider other)
     {
         // Kiểm tra va chạm Player -> chuyển đánh Player gây dame vào máu Player
@@ -32,4 +36,5 @@ public class EnemyTrigger : MonoBehaviour
             enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, ManagerScript.Ins.player.GetDamePlayer(1, ManagerScript.Ins.player.data.level, true));
         }
     }
+    #endregion
 }

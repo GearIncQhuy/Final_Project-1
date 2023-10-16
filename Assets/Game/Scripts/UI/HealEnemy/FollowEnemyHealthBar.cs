@@ -2,14 +2,16 @@ using UnityEngine;
 
 public class FollowEnemyHealthBar : MonoBehaviour
 {
-    public GameObject enemyTransform;
+    [SerializeField] private GameObject enemyTransform;
     public Vector3 offset = new Vector3(0, 1, 0);
-
-    void Update()
+    private Vector3 enemyPosition;
+    void LateUpdate()
     {
         if (enemyTransform != null)
         {
-            Vector3 enemyScreenPos = Camera.main.WorldToScreenPoint(enemyTransform.transform.position);
+            enemyPosition = enemyTransform.transform.position;
+            enemyPosition.y += 3f;
+            Vector3 enemyScreenPos = Camera.main.WorldToScreenPoint(enemyPosition);
 
             transform.position = enemyScreenPos + offset;
         }

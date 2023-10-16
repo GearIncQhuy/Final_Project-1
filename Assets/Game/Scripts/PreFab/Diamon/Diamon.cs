@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Diamon : MonoBehaviour
 {
+    #region Trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(Constants.Tag_Player))
@@ -12,4 +13,5 @@ public class Diamon : MonoBehaviour
             ObjectPool.Ins.ReturnToPool(Constants.Diamon, this.gameObject);
         }
     }
+    #endregion
 }

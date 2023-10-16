@@ -6,14 +6,14 @@ using UnityEngine;
 public class ScripTablePlayer : ScriptableObject
 {
     [Header("Poperties")]
-    public float speed;
-    public float jumpForce;
-    public float expMax;
-    public float tamdanh;
+    public int speed;
+    public int jumpForce;
+    public int expMax;
+    public int tamdanh;
 
-    public float dameMax;
-    public float healMax;
-    public float manaMax;
+    public int dameMax;
+    public int healMax;
+    public int manaMax;
 
     public int level;
 

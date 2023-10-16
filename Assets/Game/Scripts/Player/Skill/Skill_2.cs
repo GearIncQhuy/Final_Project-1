@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Skill_2 : MonoBehaviour
 {
+    #region Poperties
     private PlayerController player;
     [SerializeField] private GameObject circle;
     private ManaPlayer manaPlayer;
     private Animator animator;
     private bool startTime;
     private float timeStart;
+    #endregion
+
     private void Awake()
     {
         startTime = false;
@@ -46,6 +49,7 @@ public class Skill_2 : MonoBehaviour
         }
     }
 
+    #region Button Skill 2
     public void UseSkill()
     {
         if (player.checkPlayerLife && timeStart == 0f)
@@ -60,4 +64,5 @@ public class Skill_2 : MonoBehaviour
             }
         }
     }
+    #endregion
 }

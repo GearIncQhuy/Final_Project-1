@@ -17,7 +17,7 @@ public class BulletTest : MonoBehaviour
             time = 0;
         }
     }
-
+    #region Trigger
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag(Constants.Tag_Enemy))
@@ -29,5 +29,11 @@ public class BulletTest : MonoBehaviour
         {
             ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
         }
+
+        if (other.gameObject.CompareTag(Constants.Tag_Map))
+        {
+            ObjectPool.Ins.ReturnToPool(Constants.Tag_Bullet, this.gameObject);
+        }
     }
+    #endregion
 }
