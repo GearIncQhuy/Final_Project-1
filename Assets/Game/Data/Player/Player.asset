@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6574268bd93d4be5afc4c04e5e75478, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  speed: 10
+  jumpForce: 0
+  expMax: 6000
+  tamdanh: 25
+  dameMax: 700
+  healMax: 4000
+  manaMax: 700
+  level: 10
+  phases: 0
+  coin: 282
+  diamon: 0
