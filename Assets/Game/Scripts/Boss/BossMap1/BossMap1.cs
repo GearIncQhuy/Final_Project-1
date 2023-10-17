@@ -91,7 +91,7 @@ public class BossMap1 : MonoBehaviour
         timeSkill += Time.deltaTime;
         // Skill 1
 
-        if (timeSkill >= 10f && distance < 18f && timeSkill <= 15f)
+        if (timeSkill >= 10f && distance < 18f && timeSkill <= 10f)
         {
             if(currentState != BossMap1State.Defense)
             {

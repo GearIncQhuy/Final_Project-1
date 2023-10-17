@@ -39,7 +39,6 @@ public class BoomSkill3 : MonoBehaviour
                 {
                     enemyUI.UpdateHealEnemy(enemyUI.enemy.heal, enemyUI.enemy.heal);
                 }
-
             }
         }
     }

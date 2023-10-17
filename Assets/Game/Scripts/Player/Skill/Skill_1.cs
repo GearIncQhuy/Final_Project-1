@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Skill_1 : MonoBehaviour
 {
@@ -10,7 +9,6 @@ public class Skill_1 : MonoBehaviour
     private PlayerController player;
     private ManaPlayer manaPlayer;
     [SerializeField] private GameObject fireBallPreFab;
-    [SerializeField] private Image imgSkill;
 
     public int checkUse;
     private float timeStart;
@@ -50,15 +48,6 @@ public class Skill_1 : MonoBehaviour
                 startTime = false;
                 checkUse = 0;
             }
-            imgSkill.fillAmount = 1 - timeStart / 5f;
-            if (imgSkill.fillAmount <= 0f)
-            {
-                imgSkill.fillAmount = 0f;
-            }
-        }
-        else
-        {
-            imgSkill.fillAmount = 0f;
         }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -68,7 +57,6 @@ public class Skill_1 : MonoBehaviour
 
         if(checkUse == 2 && !startTime)
         {
-            imgSkill.fillAmount = 0;
             checkUse = 0;
         }
     }
@@ -86,11 +74,9 @@ public class Skill_1 : MonoBehaviour
             }
             if (checkUse == 1 && timeReuse)
             {
-                imgSkill.fillAmount = 1f;
                 timeReuse = false;
                 checkUse++;
             }
-            
         }
     }
     #endregion

@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Bullet
+  - Undefined
+  - Enemy
+  - PlayerSkill1
+  - PlayerSkill2
+  - PlayerSkill3
+  - PlayerSkill3_2
+  - PlayerSkill3_3
+  - PlayerSkill1_2
+  - BulletEnemy
+  - Boss
+  - Diamon
+  - Map
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - HealEnemy
+  - Player
+  - StatusUI
+  - GameUI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: HealEnemy
+    uniqueID: 193352571
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 618610523
+    locked: 0
+  - name: StatusUI
+    uniqueID: 1462784393
+    locked: 0
+  - name: GameUI
+    uniqueID: 1015483601
+    locked: 0
+  - name: UI
+    uniqueID: 2437562213
+    locked: 0

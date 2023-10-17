@@ -1,15 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Skill_3 : MonoBehaviour
 {
     #region Poperties
     private PlayerController player;
     private ManaPlayer manaPlayer;
+    
 
-    [SerializeField] private Image imgSkill;
     [SerializeField] GameObject targetCircle;
     Vector3 transCircle;
 
@@ -37,11 +36,6 @@ public class Skill_3 : MonoBehaviour
                 startTime = false;
                 timeStart = 0f;
             }
-            imgSkill.fillAmount = 1 - timeStart / 20f;
-        }
-        else
-        {
-            imgSkill.fillAmount = 0f;
         }
 
 
@@ -59,7 +53,6 @@ public class Skill_3 : MonoBehaviour
             if (manaPlayer.UseMana(player.manaCurrent, 3, player.data.level))
             {
                 UseSkill();
-                imgSkill.fillAmount = 1f;
                 //startTime = true;
             }
         }

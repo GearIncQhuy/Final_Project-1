@@ -14,10 +14,6 @@ public class Constants : MonoBehaviour
     // - Tag Diamon
     public const string Diamon = "Diamon";
 
-    // - Circle Enemy
-    public const string Tag_CircleEnemyRun = "CircleEnemyRun";
-    public const string Tag_CircleEnemyFly = "CircleEnemyFly";
-
     // - Tag Enemy
     public const string EnemyRun = "EnemyRun";
     public const string EnemyFly = "EnemyFly";

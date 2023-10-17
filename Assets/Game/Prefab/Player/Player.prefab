@@ -1749,7 +1749,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hard: {fileID: 5548455245269791941}
   fireBallPreFab: {fileID: 8762466101470834387, guid: 878c04f8ca6474690ae12b23a4957f22, type: 3}
-  imgSkill: {fileID: 0}
   checkUse: 0
 --- !u!114 &3083417649303457971
 MonoBehaviour:
@@ -1764,7 +1763,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   circle: {fileID: 6997040630950221337, guid: 1aa88b869598e47d7a458d5ee6442c2c, type: 3}
-  imgSkill: {fileID: 0}
 --- !u!114 &4419631591826859310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1777,7 +1775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6848ead11a56f49bcafba447d2aeed7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imgSkill: {fileID: 0}
   targetCircle: {fileID: 311529523105688517, guid: aefe18f95f697495894e4ad86ae5ac37, type: 3}
 --- !u!212 &8510643839485242454
 SpriteRenderer:

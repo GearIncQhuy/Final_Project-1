@@ -23,7 +23,6 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
     public int turn;
 
     public bool checkSpawn;
-    private int dem;
     #endregion
 
     private void Start()
@@ -36,14 +35,6 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
     {
         if (ManagerScript.Ins.player.checkPlayerLife)
         {
-            if(turn == 1 && dem == 0)
-            {
-                Vector3 newPosition = ManagerScript.Ins.player.transform.position;
-                newPosition.y += 4f;
-                DamageNumber damageNumber = nextTurn.Spawn(newPosition, data.level);
-                damageNumber.SetScale(4f);
-                dem++;
-            }
             if (timeSet >= 0f)
             {
                 if (turn > 3)
@@ -87,9 +78,18 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
         if(turn < 4)
         {
             turn++;
+            if(turn <= 3)
+            {
+                Vector3 newPosition = ManagerScript.Ins.player.transform.position;
+                newPosition.y += 4f;
+                DamageNumber damageNumber = nextTurn.Spawn(newPosition, turn);
+                damageNumber.SetScale(4f);
+            }
         }
         timeEndTurn = EndTurn();
         timeSet = 0;
+        ManagerScript.Ins.player.healCurrent = ManagerScript.Ins.player.data.healMax;
+        ManagerScript.Ins.player.manager.healPlayer.UpdateHealPlayer(ManagerScript.Ins.player.healCurrent, 0);
     }
     #endregion
 
@@ -111,7 +111,6 @@ public class ManagerTimeSet : Singleton<ManagerTimeSet>
 
         timeEndTurn = EndTurn();
         turn = 1;
-        dem = 0;
         if(data.level > 20)
         {
             data.level = 1;

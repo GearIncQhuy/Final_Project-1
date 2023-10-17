@@ -53,10 +53,7 @@ public class CircleFire : MonoBehaviour
                 EnemyUI enemyUI = enemyObj.GetComponent<EnemyUI>();
                 Enemy enemy = enemyObj.GetComponent<Enemy>();
                 // Update máu của Enemy 
-                if(enemy != null && enemyUI != null)
-                {
-                    enemyUI.UpdateHealEnemy(enemy.heal, ManagerScript.Ins.player.GetDamePlayer(2, ManagerScript.Ins.player.data.level, false));
-                }
+                enemyUI.UpdateHealEnemy(enemy.heal, ManagerScript.Ins.player.GetDamePlayer(2, ManagerScript.Ins.player.data.level, false));
             }
         }
     }

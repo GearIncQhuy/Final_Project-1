@@ -43,14 +43,6 @@ public class BossMap1U : MonoBehaviour
             {
                 UpdateHealBoss(ManagerScript.Ins.player.GetDamePlayer(1, ManagerScript.Ins.player.data.level, true));
             }
-            if (other.gameObject.CompareTag(Constants.Tag_Skill1_2))
-            {
-                UpdateHealBoss(ManagerScript.Ins.player.GetDamePlayer(1, ManagerScript.Ins.player.data.level, true) / 2);
-            }
-            if (other.gameObject.CompareTag(Constants.Tag_Skill3_3))
-            {
-                UpdateHealBoss(2000);
-            }
         }
     }
 }

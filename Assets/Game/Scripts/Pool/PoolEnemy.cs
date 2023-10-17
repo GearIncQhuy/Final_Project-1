@@ -131,23 +131,8 @@ public class PoolEnemy : MonoBehaviour
     /**
      * Random vị trí Enemy -> trong khoảng từ 20 -> 30f so với Player
      */
-    private Quaternion quaternion;
     private Vector3 RandomPositionEnemy(float min, float max, string enemyCategory, Transform trans)
     {
-        TagEnemyRandom = RandomEnemy();
-        Vector3 bonusVector = Vector3.zero;
-        if(TagEnemyRandom == Constants.Tag_CircleEnemyRun)
-        {
-            bonusVector.y += 3f;
-        }
-        if(TagEnemyRandom == Constants.Tag_CircleEnemyFly)
-        {
-            quaternion = Quaternion.Euler(-90, 0, 0);
-        }
-        else
-        {
-            quaternion = Quaternion.identity;
-        }
         bool pool = true;
         while (pool)
         {
@@ -160,7 +145,6 @@ public class PoolEnemy : MonoBehaviour
                 if (map.CheckPositonSpawn(randomPosition))
                 {
                     pool = false;
-                    randomPosition += bonusVector;
                     return randomPosition;
                 }
             }
@@ -182,18 +166,18 @@ public class PoolEnemy : MonoBehaviour
             case 1:
                 if (ManagerTimeSet.Ins.data.level > 0 && ManagerTimeSet.Ins.data.level <= 10)
                 {
-                    return Constants.Tag_CircleEnemyRun;
-                    //return Constants.Tag_CircleEnemyFly;
+                    return Constants.EnemyRun;
+                    //return Constants.EnemyFly;
                 }
                 else
                 {
                     if (random < 50)
                     {
-                        return Constants.Tag_CircleEnemyRun;
+                        return Constants.EnemyRun;
                     }
                     else
                     {
-                        return Constants.Tag_CircleEnemyFly;
+                        return Constants.EnemyFly;
                     }
                 }
             //case 2:
@@ -201,20 +185,17 @@ public class PoolEnemy : MonoBehaviour
             //case 3:
             //    break;
             default:
-                return Constants.Tag_CircleEnemyRun;
+                return Constants.EnemyRun;
         }
     }
-    #endregion
-
-    #region Position Circle Enemy
-    private string TagEnemyRandom;
     #endregion
 
     #region Spawn Enemy
     public void SpawnEnemy(Transform trans)
     {
-        Vector3 newRandomPosition = RandomPositionEnemy(10, 15f, TagEnemyRandom, trans);
-        GameObject circle = ObjectPool.Ins.SpawnFromPool(TagEnemyRandom, newRandomPosition, quaternion);
+        string enemyCateggory = RandomEnemy();
+        GameObject enemy = ObjectPool.Ins.SpawnFromPool(enemyCateggory, RandomPositionEnemy(10, 15f, enemyCateggory, trans), Quaternion.identity);
+        ObjectPool.Ins.enemyList.Add(enemy);
     }
     #endregion
 }
